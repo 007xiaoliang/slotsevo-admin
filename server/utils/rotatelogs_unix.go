@@ -3,11 +3,11 @@
 package utils
 
 import (
-	"slotsevo-admin/global"
 	zaprotatelogs "github.com/lestrrat-go/file-rotatelogs"
 	"go.uber.org/zap/zapcore"
 	"os"
 	"path"
+	"slotsevo-admin/global"
 	"time"
 )
 
@@ -18,12 +18,12 @@ import (
 
 func GetWriteSyncer() (zapcore.WriteSyncer, error) {
 	fileWriter, err := zaprotatelogs.New(
-		path.Join(global.GVA_CONFIG.Zap.Director, "%Y-%m-%d.log"),
-		zaprotatelogs.WithLinkName(global.GVA_CONFIG.Zap.LinkName),
+		path.Join(global.GvaConfig.Zap.Director, "%Y-%m-%d.log"),
+		zaprotatelogs.WithLinkName(global.GvaConfig.Zap.LinkName),
 		zaprotatelogs.WithMaxAge(7*24*time.Hour),
 		zaprotatelogs.WithRotationTime(24*time.Hour),
 	)
-	if global.GVA_CONFIG.Zap.LogInConsole {
+	if global.GvaConfig.Zap.LogInConsole {
 		return zapcore.NewMultiWriteSyncer(zapcore.AddSync(os.Stdout), zapcore.AddSync(fileWriter)), err
 	}
 	return zapcore.AddSync(fileWriter), err

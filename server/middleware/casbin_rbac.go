@@ -1,11 +1,11 @@
 package middleware
 
 import (
+	"github.com/gin-gonic/gin"
 	"slotsevo-admin/global"
 	"slotsevo-admin/model/request"
 	"slotsevo-admin/model/response"
 	"slotsevo-admin/service"
-	"github.com/gin-gonic/gin"
 )
 
 // 拦截器
@@ -22,7 +22,7 @@ func CasbinHandler() gin.HandlerFunc {
 		e := service.Casbin()
 		// 判断策略中是否存在
 		success, _ := e.Enforce(sub, obj, act)
-		if global.GVA_CONFIG.System.Env == "develop" || success {
+		if global.GvaConfig.System.Env == "develop" || success {
 			c.Next()
 		} else {
 			response.FailWithDetailed(gin.H{}, "权限不足", c)

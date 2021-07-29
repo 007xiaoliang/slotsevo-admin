@@ -1,8 +1,8 @@
 package upload
 
 import (
-	"slotsevo-admin/global"
 	"mime/multipart"
+	"slotsevo-admin/global"
 )
 
 //@author: [ccfish86](https://github.com/ccfish86)
@@ -23,7 +23,7 @@ type OSS interface {
 //@return: OSS
 
 func NewOss() OSS {
-	switch global.GVA_CONFIG.System.OssType {
+	switch global.GvaConfig.System.OssType {
 	case "local":
 		return &Local{}
 	case "qiniu":

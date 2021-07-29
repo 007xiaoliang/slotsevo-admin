@@ -3,16 +3,16 @@ package service
 import (
 	"database/sql"
 	"fmt"
+	"github.com/spf13/viper"
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
+	"path/filepath"
 	"slotsevo-admin/config"
 	"slotsevo-admin/global"
 	"slotsevo-admin/model"
 	"slotsevo-admin/model/request"
 	"slotsevo-admin/source"
 	"slotsevo-admin/utils"
-	"github.com/spf13/viper"
-	"gorm.io/driver/mysql"
-	"gorm.io/gorm"
-	"path/filepath"
 )
 
 //@author: [songzhibin97](https://github.com/songzhibin97)
@@ -22,8 +22,8 @@ import (
 //@return: error
 
 func writeConfig(viper *viper.Viper, mysql config.Mysql) error {
-	global.GVA_CONFIG.Mysql = mysql
-	cs := utils.StructToMap(global.GVA_CONFIG)
+	global.GvaConfig.Mysql = mysql
+	cs := utils.StructToMap(global.GvaConfig)
 	for k, v := range cs {
 		viper.Set(k, v)
 	}
@@ -100,10 +100,10 @@ func InitDB(conf request.InitDB) error {
 		Config:   "charset=utf8mb4&parseTime=True&loc=Local",
 	}
 
-	if err := writeConfig(global.GVA_VP, MysqlConfig); err != nil {
+	if err := writeConfig(global.GvaVp, MysqlConfig); err != nil {
 		return err
 	}
-	m := global.GVA_CONFIG.Mysql
+	m := global.GvaConfig.Mysql
 	if m.Dbname == "" {
 		return nil
 	}
@@ -121,16 +121,16 @@ func InitDB(conf request.InitDB) error {
 		//global.GVA_LOG.Error("MySQL启动异常", zap.Any("err", err))
 		//os.Exit(0)
 		//return nil
-		_ = writeConfig(global.GVA_VP, BaseMysql)
+		_ = writeConfig(global.GvaVp, BaseMysql)
 		return nil
 	} else {
 		sqlDB, _ := db.DB()
 		sqlDB.SetMaxIdleConns(m.MaxIdleConns)
 		sqlDB.SetMaxOpenConns(m.MaxOpenConns)
-		global.GVA_DB = db
+		global.GvaDb = db
 	}
 
-	err := global.GVA_DB.AutoMigrate(
+	err := global.GvaDb.AutoMigrate(
 		model.SysUser{},
 		model.SysAuthority{},
 		model.SysApi{},
@@ -147,7 +147,7 @@ func InitDB(conf request.InitDB) error {
 		model.SysOperationRecord{},
 	)
 	if err != nil {
-		_ = writeConfig(global.GVA_VP, BaseMysql)
+		_ = writeConfig(global.GvaVp, BaseMysql)
 		return err
 	}
 	err = initDB(
@@ -163,9 +163,9 @@ func InitDB(conf request.InitDB) error {
 		source.File,
 		source.BaseMenu)
 	if err != nil {
-		_ = writeConfig(global.GVA_VP, BaseMysql)
+		_ = writeConfig(global.GvaVp, BaseMysql)
 		return err
 	}
-	global.GVA_CONFIG.AutoCode.Root, _ = filepath.Abs("..")
+	global.GvaConfig.AutoCode.Root, _ = filepath.Abs("..")
 	return nil
 }

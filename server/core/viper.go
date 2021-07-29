@@ -3,11 +3,11 @@ package core
 import (
 	"flag"
 	"fmt"
+	"os"
+	"path/filepath"
 	"slotsevo-admin/global"
 	_ "slotsevo-admin/packfile"
 	"slotsevo-admin/utils"
-	"os"
-	"path/filepath"
 
 	"github.com/fsnotify/fsnotify"
 	"github.com/spf13/viper"
@@ -45,13 +45,13 @@ func Viper(path ...string) *viper.Viper {
 
 	v.OnConfigChange(func(e fsnotify.Event) {
 		fmt.Println("config file changed:", e.Name)
-		if err := v.Unmarshal(&global.GVA_CONFIG); err != nil {
+		if err := v.Unmarshal(&global.GvaConfig); err != nil {
 			fmt.Println(err)
 		}
 	})
-	if err := v.Unmarshal(&global.GVA_CONFIG); err != nil {
+	if err := v.Unmarshal(&global.GvaConfig); err != nil {
 		fmt.Println(err)
 	}
-	global.GVA_CONFIG.AutoCode.Root, _ = filepath.Abs("..")
+	global.GvaConfig.AutoCode.Root, _ = filepath.Abs("..")
 	return v
 }

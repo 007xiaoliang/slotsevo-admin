@@ -1,7 +1,6 @@
 package middleware
 
 import (
-	"slotsevo-admin/global"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 	"net"
@@ -9,6 +8,7 @@ import (
 	"net/http/httputil"
 	"os"
 	"runtime/debug"
+	"slotsevo-admin/global"
 	"strings"
 )
 
@@ -30,7 +30,7 @@ func GinRecovery(stack bool) gin.HandlerFunc {
 
 				httpRequest, _ := httputil.DumpRequest(c.Request, false)
 				if brokenPipe {
-					global.GVA_LOG.Error(c.Request.URL.Path,
+					global.GvaLog.Error(c.Request.URL.Path,
 						zap.Any("error", err),
 						zap.String("request", string(httpRequest)),
 					)
@@ -41,13 +41,13 @@ func GinRecovery(stack bool) gin.HandlerFunc {
 				}
 
 				if stack {
-					global.GVA_LOG.Error("[Recovery from panic]",
+					global.GvaLog.Error("[Recovery from panic]",
 						zap.Any("error", err),
 						zap.String("request", string(httpRequest)),
 						zap.String("stack", string(debug.Stack())),
 					)
 				} else {
-					global.GVA_LOG.Error("[Recovery from panic]",
+					global.GvaLog.Error("[Recovery from panic]",
 						zap.Any("error", err),
 						zap.String("request", string(httpRequest)),
 					)

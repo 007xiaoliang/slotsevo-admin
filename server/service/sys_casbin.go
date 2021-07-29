@@ -2,13 +2,13 @@ package service
 
 import (
 	"errors"
-	"slotsevo-admin/global"
-	"slotsevo-admin/model"
-	"slotsevo-admin/model/request"
 	"github.com/casbin/casbin/v2"
 	"github.com/casbin/casbin/v2/util"
 	gormadapter "github.com/casbin/gorm-adapter/v3"
 	_ "github.com/go-sql-driver/mysql"
+	"slotsevo-admin/global"
+	"slotsevo-admin/model"
+	"slotsevo-admin/model/request"
 	"strings"
 	"sync"
 )
@@ -46,7 +46,7 @@ func UpdateCasbin(authorityId string, casbinInfos []request.CasbinInfo) error {
 //@return: error
 
 func UpdateCasbinApi(oldPath string, newPath string, oldMethod string, newMethod string) error {
-	err := global.GVA_DB.Table("casbin_rule").Model(&model.CasbinModel{}).Where("v1 = ? AND v2 = ?", oldPath, oldMethod).Updates(map[string]interface{}{
+	err := global.GvaDb.Table("casbin_rule").Model(&model.CasbinModel{}).Where("v1 = ? AND v2 = ?", oldPath, oldMethod).Updates(map[string]interface{}{
 		"v1": newPath,
 		"v2": newMethod,
 	}).Error
@@ -96,8 +96,8 @@ var (
 
 func Casbin() *casbin.SyncedEnforcer {
 	once.Do(func() {
-		a, _ := gormadapter.NewAdapterByDB(global.GVA_DB)
-		syncedEnforcer, _ = casbin.NewSyncedEnforcer(global.GVA_CONFIG.Casbin.ModelPath, a)
+		a, _ := gormadapter.NewAdapterByDB(global.GvaDb)
+		syncedEnforcer, _ = casbin.NewSyncedEnforcer(global.GvaConfig.Casbin.ModelPath, a)
 		syncedEnforcer.AddFunction("ParamsMatch", ParamsMatchFunc)
 	})
 	_ = syncedEnforcer.LoadPolicy()

@@ -3,18 +3,18 @@ package service
 import (
 	"errors"
 	"fmt"
+	"github.com/360EntSecGroup-Skylar/excelize/v2"
 	"slotsevo-admin/global"
 	"slotsevo-admin/model"
-	"github.com/360EntSecGroup-Skylar/excelize/v2"
 	"strconv"
 )
 
 func ParseInfoList2Excel(infoList []model.SysBaseMenu, filePath string) error {
 	excel := excelize.NewFile()
-	excel.SetSheetRow("Sheet1", "A1", &[]string{"ID", "路由Name", "路由Path", "是否隐藏", "父节点", "排序", "文件名称"})
+	_ = excel.SetSheetRow("Sheet1", "A1", &[]string{"ID", "路由Name", "路由Path", "是否隐藏", "父节点", "排序", "文件名称"})
 	for i, menu := range infoList {
 		axis := fmt.Sprintf("A%d", i+2)
-		excel.SetSheetRow("Sheet1", axis, &[]interface{}{
+		_ = excel.SetSheetRow("Sheet1", axis, &[]interface{}{
 			menu.ID,
 			menu.Name,
 			menu.Path,
@@ -24,14 +24,14 @@ func ParseInfoList2Excel(infoList []model.SysBaseMenu, filePath string) error {
 			menu.Component,
 		})
 	}
-	excel.SaveAs(filePath)
+	_ = excel.SaveAs(filePath)
 	return nil
 }
 
 func ParseExcel2InfoList() ([]model.SysBaseMenu, error) {
 	skipHeader := true
 	fixedHeader := []string{"ID", "路由Name", "路由Path", "是否隐藏", "父节点", "排序", "文件名称"}
-	file, err := excelize.OpenFile(global.GVA_CONFIG.Excel.Dir + "ExcelImport.xlsx")
+	file, err := excelize.OpenFile(global.GvaConfig.Excel.Dir + "ExcelImport.xlsx")
 	if err != nil {
 		return nil, err
 	}
