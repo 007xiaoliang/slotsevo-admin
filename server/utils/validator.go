@@ -125,18 +125,18 @@ func Verify(st interface{}, roleMap Rules) (err error) {
 	num := val.NumField()
 	// 遍历结构体的所有字段
 	for i := 0; i < num; i++ {
-		tagVal := typ.Field(i)
+		taSlotsl := typ.Field(i)
 		val := val.Field(i)
-		if len(roleMap[tagVal.Name]) > 0 {
-			for _, v := range roleMap[tagVal.Name] {
+		if len(roleMap[taSlotsl.Name]) > 0 {
+			for _, v := range roleMap[taSlotsl.Name] {
 				switch {
 				case v == "notEmpty":
 					if isBlank(val) {
-						return errors.New(tagVal.Name + "值不能为空")
+						return errors.New(taSlotsl.Name + "值不能为空")
 					}
 				case compareMap[strings.Split(v, "=")[0]]:
 					if !compareVerify(val, v) {
-						return errors.New(tagVal.Name + "长度或值不在合法范围," + v)
+						return errors.New(taSlotsl.Name + "长度或值不在合法范围," + v)
 					}
 				}
 			}

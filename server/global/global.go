@@ -13,11 +13,11 @@ import (
 )
 
 var (
-	GvaDb     *gorm.DB
-	GvaRedis  *redis.Client
-	GvaConfig config.Server
-	GvaVp     *viper.Viper
-	//GvaLog    *oplogging.Logger
-	GvaLog   *zap.Logger
-	GvaTimer timer.Timer = timer.NewTimerTask()
+	SlotsDb     *gorm.DB
+	SlotsRedis  *redis.Client
+	SlotsConfig config.Server
+	SlotsVp     *viper.Viper
+	//SlotsLog    *oplogging.Logger
+	SlotsLog   *zap.Logger
+	SlotsTimer timer.Timer = timer.NewTimerTask()
 )

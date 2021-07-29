@@ -30,7 +30,7 @@ func CreateExaCustomer(c *gin.Context) {
 	customer.SysUserID = getUserID(c)
 	customer.SysUserAuthorityID = getUserAuthorityId(c)
 	if err := service.CreateExaCustomer(customer); err != nil {
-		global.GvaLog.Error("创建失败!", zap.Any("err", err))
+		global.SlotsLog.Error("创建失败!", zap.Any("err", err))
 		response.FailWithMessage("创建失败", c)
 	} else {
 		response.OkWithMessage("创建成功", c)
@@ -48,12 +48,12 @@ func CreateExaCustomer(c *gin.Context) {
 func DeleteExaCustomer(c *gin.Context) {
 	var customer model.ExaCustomer
 	_ = c.ShouldBindJSON(&customer)
-	if err := utils.Verify(customer.GVA_MODEL, utils.IdVerify); err != nil {
+	if err := utils.Verify(customer.SlotsModel, utils.IdVerify); err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
 	if err := service.DeleteExaCustomer(customer); err != nil {
-		global.GvaLog.Error("删除失败!", zap.Any("err", err))
+		global.SlotsLog.Error("删除失败!", zap.Any("err", err))
 		response.FailWithMessage("删除失败", c)
 	} else {
 		response.OkWithMessage("删除成功", c)
@@ -71,7 +71,7 @@ func DeleteExaCustomer(c *gin.Context) {
 func UpdateExaCustomer(c *gin.Context) {
 	var customer model.ExaCustomer
 	_ = c.ShouldBindJSON(&customer)
-	if err := utils.Verify(customer.GVA_MODEL, utils.IdVerify); err != nil {
+	if err := utils.Verify(customer.SlotsModel, utils.IdVerify); err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
@@ -80,7 +80,7 @@ func UpdateExaCustomer(c *gin.Context) {
 		return
 	}
 	if err := service.UpdateExaCustomer(&customer); err != nil {
-		global.GvaLog.Error("更新失败!", zap.Any("err", err))
+		global.SlotsLog.Error("更新失败!", zap.Any("err", err))
 		response.FailWithMessage("更新失败!", c)
 	} else {
 		response.OkWithMessage("更新成功", c)
@@ -98,13 +98,13 @@ func UpdateExaCustomer(c *gin.Context) {
 func GetExaCustomer(c *gin.Context) {
 	var customer model.ExaCustomer
 	_ = c.ShouldBindQuery(&customer)
-	if err := utils.Verify(customer.GVA_MODEL, utils.IdVerify); err != nil {
+	if err := utils.Verify(customer.SlotsModel, utils.IdVerify); err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
 	err, data := service.GetExaCustomer(customer.ID)
 	if err != nil {
-		global.GvaLog.Error("获取失败!", zap.Any("err", err))
+		global.SlotsLog.Error("获取失败!", zap.Any("err", err))
 		response.FailWithMessage("获取失败", c)
 	} else {
 		response.OkWithDetailed(response.ExaCustomerResponse{Customer: data}, "获取成功", c)
@@ -128,7 +128,7 @@ func GetExaCustomerList(c *gin.Context) {
 	}
 	err, customerList, total := service.GetCustomerInfoList(getUserAuthorityId(c), pageInfo)
 	if err != nil {
-		global.GvaLog.Error("获取失败!", zap.Any("err", err))
+		global.SlotsLog.Error("获取失败!", zap.Any("err", err))
 		response.FailWithMessage(fmt.Sprintf("获取失败：%v", err), c)
 	} else {
 		response.OkWithDetailed(response.PageResult{

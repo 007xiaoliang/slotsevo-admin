@@ -14,7 +14,7 @@ import (
 //@return: err error, conf config.Server
 
 func GetSystemConfig() (err error, conf config.Server) {
-	return nil, global.GvaConfig
+	return nil, global.SlotsConfig
 }
 
 // @description   set system config,
@@ -27,9 +27,9 @@ func GetSystemConfig() (err error, conf config.Server) {
 func SetSystemConfig(system model.System) (err error) {
 	cs := utils.StructToMap(system.Config)
 	for k, v := range cs {
-		global.GvaVp.Set(k, v)
+		global.SlotsVp.Set(k, v)
 	}
-	err = global.GvaVp.WriteConfig()
+	err = global.SlotsVp.WriteConfig()
 	return err
 }
 
@@ -42,15 +42,15 @@ func GetServerInfo() (server *utils.Server, err error) {
 	var s utils.Server
 	s.Os = utils.InitOS()
 	if s.Cpu, err = utils.InitCPU(); err != nil {
-		global.GvaLog.Error("func utils.InitCPU() Failed!", zap.String("err", err.Error()))
+		global.SlotsLog.Error("func utils.InitCPU() Failed!", zap.String("err", err.Error()))
 		return &s, err
 	}
 	if s.Rrm, err = utils.InitRAM(); err != nil {
-		global.GvaLog.Error("func utils.InitRAM() Failed!", zap.String("err", err.Error()))
+		global.SlotsLog.Error("func utils.InitRAM() Failed!", zap.String("err", err.Error()))
 		return &s, err
 	}
 	if s.Disk, err = utils.InitDisk(); err != nil {
-		global.GvaLog.Error("func utils.InitDisk() Failed!", zap.String("err", err.Error()))
+		global.SlotsLog.Error("func utils.InitDisk() Failed!", zap.String("err", err.Error()))
 		return &s, err
 	}
 

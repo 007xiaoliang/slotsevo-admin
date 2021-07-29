@@ -1,8 +1,8 @@
 package router
 
 import (
-	"slotsevo-admin/api/v1"
 	"github.com/gin-gonic/gin"
+	"slotsevo-admin/api/v1"
 )
 
 func InitFileUploadAndDownloadRouter(Router *gin.RouterGroup) {

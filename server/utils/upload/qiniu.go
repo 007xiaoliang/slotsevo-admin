@@ -24,8 +24,8 @@ type Qiniu struct{}
 //@return: string, string, error
 
 func (*Qiniu) UploadFile(file *multipart.FileHeader) (string, string, error) {
-	putPolicy := storage.PutPolicy{Scope: global.GvaConfig.Qiniu.Bucket}
-	mac := qbox.NewMac(global.GvaConfig.Qiniu.AccessKey, global.GvaConfig.Qiniu.SecretKey)
+	putPolicy := storage.PutPolicy{Scope: global.SlotsConfig.Qiniu.Bucket}
+	mac := qbox.NewMac(global.SlotsConfig.Qiniu.AccessKey, global.SlotsConfig.Qiniu.SecretKey)
 	upToken := putPolicy.UploadToken(mac)
 	cfg := qiniuConfig()
 	formUploader := storage.NewFormUploader(cfg)
@@ -34,17 +34,17 @@ func (*Qiniu) UploadFile(file *multipart.FileHeader) (string, string, error) {
 
 	f, openError := file.Open()
 	if openError != nil {
-		global.GvaLog.Error("function file.Open() Filed", zap.Any("err", openError.Error()))
+		global.SlotsLog.Error("function file.Open() Filed", zap.Any("err", openError.Error()))
 
 		return "", "", errors.New("function file.Open() Filed, err:" + openError.Error())
 	}
 	fileKey := fmt.Sprintf("%d%s", time.Now().Unix(), file.Filename) // 文件名格式 自己可以改 建议保证唯一性
 	putErr := formUploader.Put(context.Background(), &ret, upToken, fileKey, f, file.Size, &putExtra)
 	if putErr != nil {
-		global.GvaLog.Error("function formUploader.Put() Filed", zap.Any("err", putErr.Error()))
+		global.SlotsLog.Error("function formUploader.Put() Filed", zap.Any("err", putErr.Error()))
 		return "", "", errors.New("function formUploader.Put() Filed, err:" + putErr.Error())
 	}
-	return global.GvaConfig.Qiniu.ImgPath + "/" + ret.Key, ret.Key, nil
+	return global.SlotsConfig.Qiniu.ImgPath + "/" + ret.Key, ret.Key, nil
 }
 
 //@author: [piexlmax](https://github.com/piexlmax)
@@ -57,11 +57,11 @@ func (*Qiniu) UploadFile(file *multipart.FileHeader) (string, string, error) {
 //@return: error
 
 func (*Qiniu) DeleteFile(key string) error {
-	mac := qbox.NewMac(global.GvaConfig.Qiniu.AccessKey, global.GvaConfig.Qiniu.SecretKey)
+	mac := qbox.NewMac(global.SlotsConfig.Qiniu.AccessKey, global.SlotsConfig.Qiniu.SecretKey)
 	cfg := qiniuConfig()
 	bucketManager := storage.NewBucketManager(mac, cfg)
-	if err := bucketManager.Delete(global.GvaConfig.Qiniu.Bucket, key); err != nil {
-		global.GvaLog.Error("function bucketManager.Delete() Filed", zap.Any("err", err.Error()))
+	if err := bucketManager.Delete(global.SlotsConfig.Qiniu.Bucket, key); err != nil {
+		global.SlotsLog.Error("function bucketManager.Delete() Filed", zap.Any("err", err.Error()))
 		return errors.New("function bucketManager.Delete() Filed, err:" + err.Error())
 	}
 	return nil
@@ -76,10 +76,10 @@ func (*Qiniu) DeleteFile(key string) error {
 
 func qiniuConfig() *storage.Config {
 	cfg := storage.Config{
-		UseHTTPS:      global.GvaConfig.Qiniu.UseHTTPS,
-		UseCdnDomains: global.GvaConfig.Qiniu.UseCdnDomains,
+		UseHTTPS:      global.SlotsConfig.Qiniu.UseHTTPS,
+		UseCdnDomains: global.SlotsConfig.Qiniu.UseCdnDomains,
 	}
-	switch global.GvaConfig.Qiniu.Zone { // 根据配置文件进行初始化空间对应的机房
+	switch global.SlotsConfig.Qiniu.Zone { // 根据配置文件进行初始化空间对应的机房
 	case "ZoneHuadong":
 		cfg.Zone = &storage.ZoneHuadong
 	case "ZoneHuabei":

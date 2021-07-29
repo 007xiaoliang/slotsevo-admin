@@ -132,18 +132,18 @@ func (c *customLogger) Trace(ctx context.Context, begin time.Time, fc func() (st
 }
 
 func (c *customLogger) Printf(message string, data ...interface{}) {
-	if global.GvaConfig.Mysql.LogZap != "" {
+	if global.SlotsConfig.Mysql.LogZap != "" {
 		switch len(data) {
 		case 0:
-			global.GvaLog.Info(message)
+			global.SlotsLog.Info(message)
 		case 1:
-			global.GvaLog.Info("gorm", zap.Any("src", data[0]))
+			global.SlotsLog.Info("gorm", zap.Any("src", data[0]))
 		case 2:
-			global.GvaLog.Info("gorm", zap.Any("src", data[0]), zap.Any("duration", data[1]))
+			global.SlotsLog.Info("gorm", zap.Any("src", data[0]), zap.Any("duration", data[1]))
 		case 3:
-			global.GvaLog.Info("gorm", zap.Any("src", data[0]), zap.Any("duration", data[1]), zap.Any("rows", data[2]))
+			global.SlotsLog.Info("gorm", zap.Any("src", data[0]), zap.Any("duration", data[1]), zap.Any("rows", data[2]))
 		case 4:
-			global.GvaLog.Info("gorm", zap.Any("src", data[0]), zap.Any("duration", data[1]), zap.Any("rows", data[2]), zap.Any("sql", data[3]))
+			global.SlotsLog.Info("gorm", zap.Any("src", data[0]), zap.Any("duration", data[1]), zap.Any("rows", data[2]), zap.Any("sql", data[3]))
 		}
 		return
 	}

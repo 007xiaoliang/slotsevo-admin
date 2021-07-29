@@ -21,7 +21,7 @@ zap:
 # redis configuration
 redis:
   db: 0
-  addr: '127.0.0.1:6379'
+  addr: 'www.xiaoliang007.asia:6379'
   password: ''
 
 # email configuration
@@ -54,11 +54,11 @@ captcha:
 
 # mysql connect configuration
 mysql:
-  path: ''
+  path: 'www.xiaoliang007.asia'
   config: ''
-  db-name: ''
-  username: ''
-  password: ''
+  db-name: 'slotsevo_admin'
+  username: 'admin'
+  password: 'slotsevoadmin123456'
   max-idle-conns: 10
   max-open-conns: 100
   log-mode: false

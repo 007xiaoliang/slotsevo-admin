@@ -22,8 +22,8 @@ import (
 //@return: error
 
 func writeConfig(viper *viper.Viper, mysql config.Mysql) error {
-	global.GvaConfig.Mysql = mysql
-	cs := utils.StructToMap(global.GvaConfig)
+	global.SlotsConfig.Mysql = mysql
+	cs := utils.StructToMap(global.SlotsConfig)
 	for k, v := range cs {
 		viper.Set(k, v)
 	}
@@ -100,10 +100,10 @@ func InitDB(conf request.InitDB) error {
 		Config:   "charset=utf8mb4&parseTime=True&loc=Local",
 	}
 
-	if err := writeConfig(global.GvaVp, MysqlConfig); err != nil {
+	if err := writeConfig(global.SlotsVp, MysqlConfig); err != nil {
 		return err
 	}
-	m := global.GvaConfig.Mysql
+	m := global.SlotsConfig.Mysql
 	if m.Dbname == "" {
 		return nil
 	}
@@ -118,19 +118,19 @@ func InitDB(conf request.InitDB) error {
 		SkipInitializeWithVersion: false,   // 根据版本自动配置
 	}
 	if db, err := gorm.Open(mysql.New(mysqlConfig), &gorm.Config{DisableForeignKeyConstraintWhenMigrating: true}); err != nil {
-		//global.GVA_LOG.Error("MySQL启动异常", zap.Any("err", err))
+		//global.Slots_LOG.Error("MySQL启动异常", zap.Any("err", err))
 		//os.Exit(0)
 		//return nil
-		_ = writeConfig(global.GvaVp, BaseMysql)
+		_ = writeConfig(global.SlotsVp, BaseMysql)
 		return nil
 	} else {
 		sqlDB, _ := db.DB()
 		sqlDB.SetMaxIdleConns(m.MaxIdleConns)
 		sqlDB.SetMaxOpenConns(m.MaxOpenConns)
-		global.GvaDb = db
+		global.SlotsDb = db
 	}
 
-	err := global.GvaDb.AutoMigrate(
+	err := global.SlotsDb.AutoMigrate(
 		model.SysUser{},
 		model.SysAuthority{},
 		model.SysApi{},
@@ -147,7 +147,7 @@ func InitDB(conf request.InitDB) error {
 		model.SysOperationRecord{},
 	)
 	if err != nil {
-		_ = writeConfig(global.GvaVp, BaseMysql)
+		_ = writeConfig(global.SlotsVp, BaseMysql)
 		return err
 	}
 	err = initDB(
@@ -163,9 +163,9 @@ func InitDB(conf request.InitDB) error {
 		source.File,
 		source.BaseMenu)
 	if err != nil {
-		_ = writeConfig(global.GvaVp, BaseMysql)
+		_ = writeConfig(global.SlotsVp, BaseMysql)
 		return err
 	}
-	global.GvaConfig.AutoCode.Root, _ = filepath.Abs("..")
+	global.SlotsConfig.AutoCode.Root, _ = filepath.Abs("..")
 	return nil
 }

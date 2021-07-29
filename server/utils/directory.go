@@ -36,10 +36,10 @@ func CreateDir(dirs ...string) (err error) {
 			return err
 		}
 		if !exist {
-			global.GvaLog.Debug("create directory" + v)
+			global.SlotsLog.Debug("create directory" + v)
 			err = os.MkdirAll(v, os.ModePerm)
 			if err != nil {
-				global.GvaLog.Error("create directory"+v, zap.Any(" error:", err))
+				global.SlotsLog.Error("create directory"+v, zap.Any(" error:", err))
 			}
 		}
 	}

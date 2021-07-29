@@ -31,7 +31,7 @@ func ParseInfoList2Excel(infoList []model.SysBaseMenu, filePath string) error {
 func ParseExcel2InfoList() ([]model.SysBaseMenu, error) {
 	skipHeader := true
 	fixedHeader := []string{"ID", "路由Name", "路由Path", "是否隐藏", "父节点", "排序", "文件名称"}
-	file, err := excelize.OpenFile(global.GvaConfig.Excel.Dir + "ExcelImport.xlsx")
+	file, err := excelize.OpenFile(global.SlotsConfig.Excel.Dir + "ExcelImport.xlsx")
 	if err != nil {
 		return nil, err
 	}
@@ -60,7 +60,7 @@ func ParseExcel2InfoList() ([]model.SysBaseMenu, error) {
 		hidden, _ := strconv.ParseBool(row[3])
 		sort, _ := strconv.Atoi(row[5])
 		menu := model.SysBaseMenu{
-			GVA_MODEL: global.GVA_MODEL{
+			SlotsModel: global.SlotsModel{
 				ID: uint(id),
 			},
 			Name:      row[1],

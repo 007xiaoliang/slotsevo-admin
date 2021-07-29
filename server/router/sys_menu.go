@@ -1,9 +1,9 @@
 package router
 
 import (
+	"github.com/gin-gonic/gin"
 	"slotsevo-admin/api/v1"
 	"slotsevo-admin/middleware"
-	"github.com/gin-gonic/gin"
 )
 
 func InitMenuRouter(Router *gin.RouterGroup) (R gin.IRoutes) {
