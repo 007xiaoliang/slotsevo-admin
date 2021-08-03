@@ -43,7 +43,7 @@ var menus = []model.SysBaseMenu{
 //@description: sys_base_menus 表数据初始化
 func (m *menu) Init() error {
 	return global.SlotsDb.Transaction(func(tx *gorm.DB) error {
-		if tx.Where("id IN ?", []int{1, 29}).Find(&[]model.SysBaseMenu{}).RowsAffected == 2 {
+		if tx.Where("id = ?", 1).Find(&[]model.SysBaseMenu{}).RowsAffected == 1 {
 			color.Danger.Println("\n[Mysql] --> sys_base_menus 表的初始数据已存在!")
 			return nil
 		}

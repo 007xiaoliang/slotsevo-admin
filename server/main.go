@@ -19,7 +19,6 @@ func main() {
 	global.SlotsDb = initialize.Gorm() // gorm连接数据库
 	initialize.Timer()
 	if global.SlotsDb != nil {
-		initialize.MysqlTables(global.SlotsDb) // 初始化表
 		// 程序结束前关闭数据库链接
 		db, _ := global.SlotsDb.DB()
 		defer db.Close()

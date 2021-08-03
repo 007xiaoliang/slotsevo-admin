@@ -10,7 +10,6 @@ import (
 	"slotsevo-admin/config"
 	"slotsevo-admin/global"
 	"slotsevo-admin/model"
-	"slotsevo-admin/model/request"
 	"slotsevo-admin/source"
 	"slotsevo-admin/utils"
 )
@@ -70,42 +69,32 @@ func initDB(InitDBFunctions ...model.InitDBFunc) (err error) {
 //@param: authorityId string
 //@return: err error, treeMap map[string][]model.SysMenu
 
-func InitDB(conf request.InitDB) error {
-	BaseMysql := config.Mysql{
-		Path:     "",
-		Dbname:   "",
-		Username: "",
-		Password: "",
-		Config:   "charset=utf8mb4&parseTime=True&loc=Local",
-	}
-
-	if conf.Host == "" {
-		conf.Host = "127.0.0.1"
-	}
-
-	if conf.Port == "" {
-		conf.Port = "3306"
-	}
-	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/", conf.UserName, conf.Password, conf.Host, conf.Port)
-	createSql := fmt.Sprintf("CREATE DATABASE IF NOT EXISTS %s DEFAULT CHARACTER SET utf8mb4 DEFAULT COLLATE utf8mb4_general_ci;", conf.DBName)
-	if err := createTable(dsn, "mysql", createSql); err != nil {
-		return err
+func InitDB(gormConfig *gorm.Config) (*gorm.DB, error) {
+	var (
+		db  *gorm.DB
+		err error
+	)
+	conf := global.SlotsConfig.Mysql
+	dsn := fmt.Sprintf("%s:%s@tcp(%s)/", conf.Username, conf.Password, conf.Path)
+	createSql := fmt.Sprintf("CREATE DATABASE IF NOT EXISTS %s DEFAULT CHARACTER SET utf8mb4 DEFAULT COLLATE utf8mb4_general_ci;", conf.Dbname)
+	if err = createTable(dsn, "mysql", createSql); err != nil {
+		return db, err
 	}
 
 	MysqlConfig := config.Mysql{
-		Path:     fmt.Sprintf("%s:%s", conf.Host, conf.Port),
-		Dbname:   conf.DBName,
-		Username: conf.UserName,
+		Path:     conf.Path,
+		Dbname:   conf.Dbname,
+		Username: conf.Username,
 		Password: conf.Password,
-		Config:   "charset=utf8mb4&parseTime=True&loc=Local",
+		Config:   conf.Config,
 	}
 
-	if err := writeConfig(global.SlotsVp, MysqlConfig); err != nil {
-		return err
+	if err = writeConfig(global.SlotsVp, MysqlConfig); err != nil {
+		return db, err
 	}
 	m := global.SlotsConfig.Mysql
 	if m.Dbname == "" {
-		return nil
+		return db, nil
 	}
 
 	linkDns := m.Username + ":" + m.Password + "@tcp(" + m.Path + ")/" + m.Dbname + "?" + m.Config
@@ -117,12 +106,9 @@ func InitDB(conf request.InitDB) error {
 		DontSupportRenameColumn:   true,    // 用 `change` 重命名列，MySQL 8 之前的数据库和 MariaDB 不支持重命名列
 		SkipInitializeWithVersion: false,   // 根据版本自动配置
 	}
-	if db, err := gorm.Open(mysql.New(mysqlConfig), &gorm.Config{DisableForeignKeyConstraintWhenMigrating: true}); err != nil {
-		//global.Slots_LOG.Error("MySQL启动异常", zap.Any("err", err))
-		//os.Exit(0)
-		//return nil
-		_ = writeConfig(global.SlotsVp, BaseMysql)
-		return nil
+	if db, err = gorm.Open(mysql.New(mysqlConfig), gormConfig); err != nil {
+		_ = writeConfig(global.SlotsVp, MysqlConfig)
+		return db, nil
 	} else {
 		sqlDB, _ := db.DB()
 		sqlDB.SetMaxIdleConns(m.MaxIdleConns)
@@ -130,42 +116,42 @@ func InitDB(conf request.InitDB) error {
 		global.SlotsDb = db
 	}
 
-	err := global.SlotsDb.AutoMigrate(
+	err = global.SlotsDb.AutoMigrate(
 		model.SysUser{},
-		model.SysAuthority{},
+		//model.SysAuthority{},
 		model.SysApi{},
 		model.SysBaseMenu{},
 		model.SysBaseMenuParameter{},
 		model.JwtBlacklist{},
-		model.SysDictionary{},
-		model.SysDictionaryDetail{},
-		model.ExaFileUploadAndDownload{},
-		model.ExaFile{},
-		model.ExaFileChunk{},
-		model.ExaSimpleUploader{},
-		model.ExaCustomer{},
+		//model.SysDictionary{},
+		//model.SysDictionaryDetail{},
+		//model.ExaFileUploadAndDownload{},
+		//model.ExaFile{},
+		//model.ExaFileChunk{},
+		//model.ExaSimpleUploader{},
+		//model.ExaCustomer{},
 		model.SysOperationRecord{},
 	)
 	if err != nil {
-		_ = writeConfig(global.SlotsVp, BaseMysql)
-		return err
+		_ = writeConfig(global.SlotsVp, MysqlConfig)
+		return db, err
 	}
 	err = initDB(
 		source.Admin,
 		source.Api,
-		source.AuthorityMenu,
-		source.Authority,
-		source.AuthoritiesMenus,
-		source.Casbin,
-		source.DataAuthorities,
-		source.Dictionary,
-		source.DictionaryDetail,
-		source.File,
+		//source.AuthorityMenu,
+		//source.Authority,
+		//source.AuthoritiesMenus,
+		//source.Casbin,
+		//source.DataAuthorities,
+		//source.Dictionary,
+		//source.DictionaryDetail,
+		//source.File,
 		source.BaseMenu)
 	if err != nil {
-		_ = writeConfig(global.SlotsVp, BaseMysql)
-		return err
+		_ = writeConfig(global.SlotsVp, MysqlConfig)
+		return db, err
 	}
 	global.SlotsConfig.AutoCode.Root, _ = filepath.Abs("..")
-	return nil
+	return db, nil
 }

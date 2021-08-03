@@ -16,14 +16,14 @@ import (
 func DeleteBaseMenu(id float64) (err error) {
 	err = global.SlotsDb.Preload("Parameters").Where("parent_id = ?", id).First(&model.SysBaseMenu{}).Error
 	if err != nil {
-		var menu model.SysBaseMenu
-		db := global.SlotsDb.Preload("SysAuthoritys").Where("id = ?", id).First(&menu).Delete(&menu)
-		err = global.SlotsDb.Delete(&model.SysBaseMenuParameter{}, "sys_base_menu_id = ?", id).Error
-		if len(menu.SysAuthoritys) > 0 {
-			err = global.SlotsDb.Model(&menu).Association("SysAuthoritys").Delete(&menu.SysAuthoritys)
-		} else {
-			err = db.Error
-		}
+		//var menu model.SysBaseMenu
+		//db := global.SlotsDb.Preload("SysAuthoritys").Where("id = ?", id).First(&menu).Delete(&menu)
+		//err = global.SlotsDb.Delete(&model.SysBaseMenuParameter{}, "sys_base_menu_id = ?", id).Error
+		//if len(menu.SysAuthoritys) > 0 {
+		//	err = global.SlotsDb.Model(&menu).Association("SysAuthoritys").Delete(&menu.SysAuthoritys)
+		//} else {
+		//	err = db.Error
+		//}
 	} else {
 		return errors.New("此菜单存在子菜单不可删除")
 	}

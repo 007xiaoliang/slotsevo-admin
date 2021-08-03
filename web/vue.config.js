@@ -8,7 +8,7 @@ function resolve(dir) {
     return path.join(__dirname, dir)
 }
 module.exports = {
-    // 基础配置 详情看文档
+    // 基础配置 详情看文档 https://cli.vuejs.org/zh/config/
     publicPath: './',
     outputDir: 'dist',
     assetsDir: 'static',
@@ -66,7 +66,7 @@ module.exports = {
                     // 1.目前已经测试通过[vue,axios,echarts]可以cdn引用，其它组件测试通过后可继续添加
                     // 2.此处添加不打包后，需在public/index.html head中添加相应cdn资源链接
                     config.set('externals', buildConf.cdns.reduce((p, a) => {
-                        p[a.name] = a.scope 
+                        p[a.name] = a.scope
                         return p
                     },{}))
                     // 不打包 end
