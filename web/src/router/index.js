@@ -10,25 +10,24 @@ Router.prototype.push = function push(location) {
     return originalPush.call(this, location).catch(err => err)
 }
 
-const baseRouters = [{
+const baseRouters = [
+    {
     path: '/',
     redirect: '/login'
 },
-{
-    path: "/init",
-    name: 'init',
-    component: () =>
-        import('@/view/init/init.vue')
-},
-{
-    path: '/login',
-    name: 'login',
-    component: () =>
-        import('@/view/login/login.vue')
-}
+    {
+        path: "/init",
+        name: 'init',
+        component: () =>
+            import('@/view/init/init.vue')
+    },
+    {
+        path: '/login',
+        name: 'login',
+        component: () =>
+            import('@/view/login/login.vue')
+    }
 ]
-
-// 需要通过后台数据来生成的组件
 
 const createRouter = () => new Router({
     routes: baseRouters

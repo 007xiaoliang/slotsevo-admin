@@ -2,13 +2,13 @@
   <div class="big">
     <el-row>
       <div class="card">
-        <el-col :xs="24" :lg="16" :md="16" >
+        <el-col :xs="24" :lg="16" :md="16">
           <div class="car-left">
             <el-row>
               <div>
                 <el-col :xs="4" :md="3" :lg="3">
                   <span class="card-img">
-                    <img :src="userInfo.headerImg" alt="" />
+                    <img :src="userInfo.headerImg" alt=""/>
                   </span>
                 </el-col>
                 <el-col :xs="20" :lg="12" :md="12">
@@ -28,29 +28,35 @@
           <div class="car-right">
             <el-row>
               <el-col :span="8"
-                ><div class="car-item">
+              >
+                <div class="car-item">
                   <span class="flow"><i class="el-icon-s-grid"></i></span>
                   <span>今日流量 </span>
                   <b>13260</b>
-                </div></el-col
+                </div>
+              </el-col
               >
               <el-col :span="8"
-                ><div class="car-item">
+              >
+                <div class="car-item">
                   <span class="user-number">
                     <i class="el-icon-s-custom"></i>
                   </span>
                   <span>总用户 </span>
                   <b>48286</b>
-                </div></el-col
+                </div>
+              </el-col
               >
               <el-col :span="8"
-                ><div class="car-item">
+              >
+                <div class="car-item">
                   <span class="feedback">
                     <i class="el-icon-star-on"></i>
                   </span>
                   <span>好评率 </span>
                   <b>98%</b>
-                </div></el-col
+                </div>
+              </el-col
               >
             </el-row>
           </div>
@@ -59,24 +65,24 @@
     </el-row>
     <el-row>
       <el-card shadow="hover">
-          <h2>
-            使用教学：<a style="color:#409EFF"  target="view_window" href="https://www.bilibili.com/video/BV1fV411y7dT/">https://www.bilibili.com/video/BV1fV411y7dT/</a>
-          </h2>
-          <br>
-          <h2>
-            工作流教学：<a style="color:#409EFF"  target="view_window" href="https://www.bilibili.com/video/BV1Ka411F7Ji/">https://www.bilibili.com/video/BV1Ka411F7Ji/</a>
-          </h2>
-          <div></div>
+        <h2>
+          使用教学：<a style="color:#409EFF" target="view_window" href="https://www.bilibili.com/video/BV1fV411y7dT/">https://www.bilibili.com/video/BV1fV411y7dT/</a>
+        </h2>
+        <br>
+        <h2>
+          工作流教学：<a style="color:#409EFF" target="view_window" href="https://www.bilibili.com/video/BV1Ka411F7Ji/">https://www.bilibili.com/video/BV1Ka411F7Ji/</a>
+        </h2>
+        <div></div>
       </el-card>
     </el-row>
     <div class="shadow">
       <el-row :gutter="20">
         <el-col
-          :span="4"
-          v-for="(card, key) in toolCards"
-          :key="key"
-          @click.native="toTarget(card.name)"
-          :xs="8"
+            :span="4"
+            v-for="(card, key) in toolCards"
+            :key="key"
+            @click.native="toTarget(card.name)"
+            :xs="8"
         >
           <el-card shadow="hover" class="grid-content">
             <i :class="card.icon" :style="{ color: card.color }"></i>
@@ -89,12 +95,12 @@
       <el-row :gutter="32">
         <el-col :xs="24" :sm="24" :lg="12">
           <div class="chart-player">
-            <musicPlayer />
+            <musicPlayer/>
           </div>
         </el-col>
         <el-col :xs="24" :sm="24" :lg="12">
           <div class="chart-player">
-            <todo-list />
+            <todo-list/>
           </div>
         </el-col>
       </el-row>
@@ -105,7 +111,8 @@
 <script>
 import musicPlayer from "./component/musicPlayer";
 import TodoList from "./component/todoList";
-import { mapGetters } from "vuex";
+import {mapGetters} from "vuex";
+
 export default {
   name: "Dashboard",
   data() {
@@ -162,7 +169,7 @@ export default {
   },
   methods: {
     toTarget(name) {
-      this.$router.push({ name });
+      this.$router.push({name});
     },
   },
 };
@@ -174,11 +181,13 @@ export default {
   padding-top: 0;
   background-color: rgb(243, 243, 243);
   padding-top: 15px;
+
   .top {
     width: 100%;
     height: 360px;
     margin-top: 20px;
     overflow: hidden;
+
     .chart-container {
       position: relative;
       width: 100%;
@@ -187,9 +196,11 @@ export default {
       background-color: #fff;
     }
   }
+
   .mid {
     width: 100%;
     height: 380px;
+
     .chart-wrapper {
       height: 340px;
       background: #fff;
@@ -197,6 +208,7 @@ export default {
       margin-bottom: 32px;
     }
   }
+
   .bottom {
     width: 100%;
     height: 300px;
@@ -204,6 +216,7 @@ export default {
     .el-row {
       margin-right: 4px !important;
     }
+
     .chart-player {
       width: 100%;
       height: 270px;

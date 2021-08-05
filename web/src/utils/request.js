@@ -1,6 +1,6 @@
 import axios from 'axios'; // 引入axios
-import { Message } from 'element-ui';
-import { store } from '@/store/index'
+import {Message} from 'element-ui';
+import {store} from '@/store/index'
 import context from '@/main.js'
 import router from '@/router/index'
 
@@ -23,13 +23,13 @@ const showLoading = () => {
 }
 
 const closeLoading = () => {
-        acitveAxios--
-        if (acitveAxios <= 0) {
-            clearTimeout(timer)
-            context.$bus.emit("closeLoading")
-        }
+    acitveAxios--
+    if (acitveAxios <= 0) {
+        clearTimeout(timer)
+        context.$bus.emit("closeLoading")
     }
-    //http request 拦截器
+}
+//http request 拦截器
 service.interceptors.request.use(
     config => {
         if (!config.donNotShowLoading) {
@@ -65,23 +65,23 @@ service.interceptors.response.use(
         if (response.headers["new-token"]) {
             store.commit('user/setToken', response.headers["new-token"])
         }
-        if(response.data.code == 0){
-            if(response.data.data?.needInit){
+        if (response.data.code === 0) {
+            if (response.data.data?.needInit) {
                 Message({
-                    type:"info",
-                    message:"您是第一次使用，请初始化"
+                    type: "info",
+                    message: "您是第一次使用，请初始化"
                 })
-                    store.commit("user/NeedInit")
-                    router.push({name:"init"})
+                store.commit("user/NeedInit")
+                router.push({name: "init"})
             }
         }
-        if (response.data.code == 0 || response.headers.success === "true") {
+        if (response.data.code === 0 || response.headers.success === "true") {
             return response.data
         } else {
             Message({
                 showClose: true,
                 message: response.data.msg || decodeURI(response.headers.msg),
-                type: response.headers.msgtype||'error',
+                type: response.headers.msgtype || 'error',
             })
             if (response.data.data && response.data.data.reload) {
                 store.commit('user/LoginOut')

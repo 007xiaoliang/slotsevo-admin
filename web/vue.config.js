@@ -34,7 +34,7 @@ module.exports = {
         },
     },
     configureWebpack: {
-        //    @路径走src文件夹
+        // @路径走src文件夹
         resolve: {
             alias: {
                 '@': resolve('src')

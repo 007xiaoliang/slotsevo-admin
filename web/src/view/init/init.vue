@@ -64,12 +64,12 @@ export default {
       });
       try {
         const res = await initDB(this.form);
-        if (res.code == 0) {
+        if (res.code === 0) {
           this.$message({
             type: "success",
             message: res.msg,
           });
-          this.$router.push({name:"login"})
+          await this.$router.push({name: "login"})
         }
           loading.close();
       } catch (err) {
