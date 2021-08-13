@@ -1,12 +1,12 @@
-import { asyncRouterHandle } from '@/utils/asyncRouter';
+import {asyncRouterHandle} from '@/utils/asyncRouter';
 
-import { asyncMenu } from '@/api/menu'
+import {asyncMenu} from '@/api/menu'
 
 const routerList = []
 const formatRouter = (routes) => {
     routes && routes.map(item => {
-        if ((!item.children || item.children.every(ch => ch.hidden)) && item.name != '404') {
-            routerList.push({ label: item.meta.title, value: item.name })
+        if ((!item.children || item.children.every(ch => ch.hidden)) && item.name !== '404') {
+            routerList.push({label: item.meta.title, value: item.name})
         }
         if (item.children && item.children.length > 0) {
             formatRouter(item.children)
@@ -31,7 +31,7 @@ export const router = {
     },
     actions: {
         // 从后台获取动态路由
-        async SetAsyncRouter({ commit }) {
+        async SetAsyncRouter({commit}) {
             const baseRouter = [{
                 path: '/layout',
                 name: 'layout',
@@ -42,10 +42,10 @@ export const router = {
                 children: []
             }]
             const asyncRouterRes = await asyncMenu()
-            if(asyncRouterRes.code !=0){
+            if (asyncRouterRes.code !== 0) {
                 return
             }
-            const asyncRouter = asyncRouterRes.data&&asyncRouterRes.data.menus
+            const asyncRouter = asyncRouterRes.data && asyncRouterRes.data.menus
             asyncRouter.push({
                 path: "404",
                 name: "404",

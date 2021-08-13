@@ -12,9 +12,9 @@ Router.prototype.push = function push(location) {
 
 const baseRouters = [
     {
-    path: '/',
-    redirect: '/login'
-},
+        path: '/',
+        redirect: '/login'
+    },
     {
         path: "/init",
         name: 'init',
