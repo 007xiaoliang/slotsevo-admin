@@ -1,15 +1,12 @@
 package service
 
 import (
-	"errors"
-	"gorm.io/gorm"
 	"slotsevo-admin/global"
 	"slotsevo-admin/model"
-	"slotsevo-admin/model/request"
 	"strconv"
 )
 
-//@author: [piexlmax](https://github.com/piexlmax)
+//@author: xiaoliang
 //@function: getMenuTreeMap
 //@description: 获取路由总树map
 //@param: authorityId string
@@ -25,7 +22,7 @@ func getMenuTreeMap(authorityId string) (err error, treeMap map[string][]model.S
 	return err, treeMap
 }
 
-//@author: [piexlmax](https://github.com/piexlmax)
+//@author: xiaoliang
 //@function: GetMenuTree
 //@description: 获取动态菜单树
 //@param: authorityId string
@@ -40,7 +37,7 @@ func GetMenuTree(authorityId string) (err error, menus []model.SysMenu) {
 	return err, menus
 }
 
-//@author: [piexlmax](https://github.com/piexlmax)
+//@author: xiaoliang
 //@function: getChildrenList
 //@description: 获取子菜单
 //@param: menu *model.SysMenu, treeMap map[string][]model.SysMenu
@@ -54,7 +51,7 @@ func getChildrenList(menu *model.SysMenu, treeMap map[string][]model.SysMenu) (e
 	return err
 }
 
-//@author: [piexlmax](https://github.com/piexlmax)
+//@author: xiaoliang
 //@function: GetInfoList
 //@description: 获取路由分页
 //@return: err error, list interface{}, total int64
@@ -69,12 +66,11 @@ func GetInfoList() (err error, list interface{}, total int64) {
 	return err, menuList, total
 }
 
-//@author: [piexlmax](https://github.com/piexlmax)
+//@author: xiaoliang
 //@function: getBaseChildrenList
 //@description: 获取菜单的子菜单
 //@param: menu *model.SysBaseMenu, treeMap map[string][]model.SysBaseMenu
 //@return: err error
-
 func getBaseChildrenList(menu *model.SysBaseMenu, treeMap map[string][]model.SysBaseMenu) (err error) {
 	menu.Children = treeMap[strconv.Itoa(int(menu.ID))]
 	for i := 0; i < len(menu.Children); i++ {
@@ -82,24 +78,6 @@ func getBaseChildrenList(menu *model.SysBaseMenu, treeMap map[string][]model.Sys
 	}
 	return err
 }
-
-//@author: [piexlmax](https://github.com/piexlmax)
-//@function: AddBaseMenu
-//@description: 添加基础路由
-//@param: menu model.SysBaseMenu
-//@return: err error
-
-func AddBaseMenu(menu model.SysBaseMenu) error {
-	if !errors.Is(global.SlotsDb.Where("name = ?", menu.Name).First(&model.SysBaseMenu{}).Error, gorm.ErrRecordNotFound) {
-		return errors.New("存在重复name，请修改name")
-	}
-	return global.SlotsDb.Create(&menu).Error
-}
-
-//@author: [piexlmax](https://github.com/piexlmax)
-//@function: getBaseMenuTreeMap
-//@description: 获取路由总树map
-//@return: err error, treeMap map[string][]model.SysBaseMenu
 
 func getBaseMenuTreeMap() (err error, treeMap map[string][]model.SysBaseMenu) {
 	var allMenus []model.SysBaseMenu
@@ -109,45 +87,4 @@ func getBaseMenuTreeMap() (err error, treeMap map[string][]model.SysBaseMenu) {
 		treeMap[v.ParentId] = append(treeMap[v.ParentId], v)
 	}
 	return err, treeMap
-}
-
-//@author: [piexlmax](https://github.com/piexlmax)
-//@function: GetBaseMenuTree
-//@description: 获取基础路由树
-//@return: err error, menus []model.SysBaseMenu
-
-func GetBaseMenuTree() (err error, menus []model.SysBaseMenu) {
-	err, treeMap := getBaseMenuTreeMap()
-	menus = treeMap["0"]
-	for i := 0; i < len(menus); i++ {
-		err = getBaseChildrenList(&menus[i], treeMap)
-	}
-	return err, menus
-}
-
-//@author: [piexlmax](https://github.com/piexlmax)
-//@function: AddMenuAuthority
-//@description: 为角色增加menu树
-//@param: menus []model.SysBaseMenu, authorityId string
-//@return: err error
-
-func AddMenuAuthority(menus []model.SysBaseMenu, authorityId string) (err error) {
-	var auth model.SysAuthority
-	auth.AuthorityId = authorityId
-	auth.SysBaseMenus = menus
-	err = SetMenuAuthority(&auth)
-	return err
-}
-
-//@author: [piexlmax](https://github.com/piexlmax)
-//@function: GetMenuAuthority
-//@description: 查看当前角色树
-//@param: info *request.GetAuthorityId
-//@return: err error, menus []model.SysMenu
-
-func GetMenuAuthority(info *request.GetAuthorityId) (err error, menus []model.SysMenu) {
-	err = global.SlotsDb.Where("authority_id = ? ", info.AuthorityId).Order("sort").Find(&menus).Error
-	//sql := "SELECT authority_menu.keep_alive,authority_menu.default_menu,authority_menu.created_at,authority_menu.updated_at,authority_menu.deleted_at,authority_menu.menu_level,authority_menu.parent_id,authority_menu.path,authority_menu.`name`,authority_menu.hidden,authority_menu.component,authority_menu.title,authority_menu.icon,authority_menu.sort,authority_menu.menu_id,authority_menu.authority_id FROM authority_menu WHERE authority_menu.authority_id = ? ORDER BY authority_menu.sort ASC"
-	//err = global.Slots_DB.Raw(sql, authorityId).Scan(&menus).Error
-	return err, menus
 }

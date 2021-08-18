@@ -11,7 +11,7 @@ import (
 	"time"
 )
 
-//@author: [SliverHorn](https://github.com/SliverHorn)
+//@author: xiaoliang
 //@function: GetWriteSyncer
 //@description: zap logger中加入file-rotatelogs
 //@return: zapcore.WriteSyncer, error

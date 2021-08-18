@@ -4,7 +4,7 @@ import (
 	"slotsevo-admin/utils"
 )
 
-//@author: [maplepie](https://github.com/maplepie)
+//@author: xiaoliang
 //@function: EmailTest
 //@description: 发送邮件测试
 //@return: err error

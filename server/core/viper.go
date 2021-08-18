@@ -4,7 +4,6 @@ import (
 	"flag"
 	"fmt"
 	"os"
-	"path/filepath"
 	"slotsevo-admin/global"
 	_ "slotsevo-admin/packfile"
 	"slotsevo-admin/utils"
@@ -52,6 +51,5 @@ func Viper(path ...string) *viper.Viper {
 	if err := v.Unmarshal(&global.SlotsConfig); err != nil {
 		fmt.Println(err)
 	}
-	global.SlotsConfig.AutoCode.Root, _ = filepath.Abs("..")
 	return v
 }

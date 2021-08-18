@@ -11,18 +11,17 @@ import (
 	"github.com/jordan-wright/email"
 )
 
-//@author: [maplepie](https://github.com/maplepie)
+//@author: xiaoliang
 //@function: Email
 //@description: Email发送方法
 //@param: subject string, body string
 //@return: error
-
 func Email(subject string, body string) error {
 	to := strings.Split(global.SlotsConfig.Email.To, ",")
 	return send(to, subject, body)
 }
 
-//@author: [SliverHorn](https://github.com/SliverHorn)
+//@author: xiaoliang
 //@function: ErrorToEmail
 //@description: 给email中间件错误发送邮件到指定邮箱
 //@param: subject string, body string
@@ -36,18 +35,17 @@ func ErrorToEmail(subject string, body string) error {
 	return send(to, subject, body)
 }
 
-//@author: [maplepie](https://github.com/maplepie)
+//@author: xiaoliang
 //@function: EmailTest
 //@description: Email测试方法
 //@param: subject string, body string
 //@return: error
-
 func EmailTest(subject string, body string) error {
 	to := []string{global.SlotsConfig.Email.From}
 	return send(to, subject, body)
 }
 
-//@author: [maplepie](https://github.com/maplepie)
+//@author: xiaoliang
 //@function: send
 //@description: Email发送方法
 //@param: subject string, body string

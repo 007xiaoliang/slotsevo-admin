@@ -1,24 +1,3 @@
-aliyun-oss:
-  endpoint: yourEndpoint
-  access-key-id: yourAccessKeyId
-  access-key-secret: yourAccessKeySecret
-  bucket-name: yourBucketName
-  bucket-url: yourBucketUrl
-autocode:
-  transfer-restart: true
-  root: D:\workCode\slotsevo-admin
-  server: /server
-  server-api: /api/v1
-  server-initialize: /initialize
-  server-model: /model
-  server-request: /model/request/
-  server-router: /router
-  server-service: /service
-  web: /web/src
-  web-api: /api
-  web-form: /view
-  web-table: /view
-  web-flow: /view
 captcha:
   key-long: 6
   img-width: 240
@@ -33,8 +12,6 @@ email:
   is-ssl: true
   secret: xxx
   nickname: test
-excel:
-  dir: ./resource/excel/
 jwt:
   signing-key: qmPlus
   expires-time: 604800
@@ -51,14 +28,6 @@ mysql:
   max-open-conns: 0
   log-mode: false
   log-zap: ""
-qiniu:
-  zone: ZoneHuaDong
-  bucket: ""
-  img-path: ""
-  use-https: false
-  access-key: ""
-  secret-key: ""
-  use-cdn-domains: false
 redis:
   db: 0
   addr: www.xiaoliang007.asia:6379
@@ -69,13 +38,6 @@ system:
   db-type: mysql
   oss-type: local
   use-multipoint: false
-tencent-cos:
-  bucket: xxxxx-10005608
-  region: ap-shanghai
-  secret-id: xxxxxxxx
-  secret-key: xxxxxxxx
-  base-url: https://gin.vue.admin
-  path-prefix: slotsevo-admin
 timer:
   start: true
   spec: '@daily'

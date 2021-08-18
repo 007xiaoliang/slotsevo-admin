@@ -8,7 +8,7 @@ import (
 	"slotsevo-admin/utils"
 )
 
-//@author: [piexlmax](https://github.com/piexlmax)
+//@author: xiaoliang
 //@function: GetSystemConfig
 //@description: 读取配置文件
 //@return: err error, conf config.Server
@@ -18,7 +18,7 @@ func GetSystemConfig() (err error, conf config.Server) {
 }
 
 // @description   set system config,
-//@author: [piexlmax](https://github.com/piexlmax)
+//@author: xiaoliang
 //@function: SetSystemConfig
 //@description: 设置配置文件
 //@param: system model.System
@@ -33,7 +33,7 @@ func SetSystemConfig(system model.System) (err error) {
 	return err
 }
 
-//@author: [SliverHorn](https://github.com/SliverHorn)
+//@author: xiaoliang
 //@function: GetServerInfo
 //@description: 获取服务器信息
 //@return: server *utils.Server, err error

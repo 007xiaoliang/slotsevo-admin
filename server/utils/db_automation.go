@@ -8,7 +8,7 @@ import (
 	"gorm.io/gorm"
 )
 
-//@author: [songzhibin97](https://github.com/songzhibin97)
+//@author: xiaoliang
 //@function: ClearTable
 //@description: 清理数据库表数据
 //@param: target db(数据库对象) *gorm.DB,tableName(表名) string,compareField(比较字段) string , interval string  间隔

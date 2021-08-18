@@ -1,15 +1,12 @@
 package global
 
 import (
-	"slotsevo-admin/utils/timer"
-
-	"go.uber.org/zap"
-
-	"slotsevo-admin/config"
-
 	"github.com/go-redis/redis"
 	"github.com/spf13/viper"
+	"go.uber.org/zap"
 	"gorm.io/gorm"
+	"slotsevo-admin/config"
+	"slotsevo-admin/utils/timer"
 )
 
 var (
@@ -19,5 +16,5 @@ var (
 	SlotsVp     *viper.Viper
 	//SlotsLog    *oplogging.Logger
 	SlotsLog   *zap.Logger
-	SlotsTimer timer.Timer = timer.NewTimerTask()
+	SlotsTimer = timer.NewTimerTask()
 )

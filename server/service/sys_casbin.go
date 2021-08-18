@@ -13,12 +13,11 @@ import (
 	"sync"
 )
 
-//@author: [piexlmax](https://github.com/piexlmax)
+//@author: xiaoliang
 //@function: UpdateCasbin
 //@description: 更新casbin权限
 //@param: authorityId string, casbinInfos []request.CasbinInfo
 //@return: error
-
 func UpdateCasbin(authorityId string, casbinInfos []request.CasbinInfo) error {
 	ClearCasbin(0, authorityId)
 	rules := [][]string{}
@@ -39,12 +38,11 @@ func UpdateCasbin(authorityId string, casbinInfos []request.CasbinInfo) error {
 	return nil
 }
 
-//@author: [piexlmax](https://github.com/piexlmax)
+//@author: xiaoliang
 //@function: UpdateCasbinApi
 //@description: API更新随动
 //@param: oldPath string, newPath string, oldMethod string, newMethod string
 //@return: error
-
 func UpdateCasbinApi(oldPath string, newPath string, oldMethod string, newMethod string) error {
 	err := global.SlotsDb.Table("casbin_rule").Model(&model.CasbinModel{}).Where("v1 = ? AND v2 = ?", oldPath, oldMethod).Updates(map[string]interface{}{
 		"v1": newPath,
@@ -53,12 +51,11 @@ func UpdateCasbinApi(oldPath string, newPath string, oldMethod string, newMethod
 	return err
 }
 
-//@author: [piexlmax](https://github.com/piexlmax)
+//@author: xiaoliang
 //@function: GetPolicyPathByAuthorityId
 //@description: 获取权限列表
 //@param: authorityId string
 //@return: pathMaps []request.CasbinInfo
-
 func GetPolicyPathByAuthorityId(authorityId string) (pathMaps []request.CasbinInfo) {
 	e := Casbin()
 	list := e.GetFilteredPolicy(0, authorityId)
@@ -71,7 +68,7 @@ func GetPolicyPathByAuthorityId(authorityId string) (pathMaps []request.CasbinIn
 	return pathMaps
 }
 
-//@author: [piexlmax](https://github.com/piexlmax)
+//@author: xiaoliang
 //@function: ClearCasbin
 //@description: 清除匹配的权限
 //@param: v int, p ...string
@@ -84,7 +81,7 @@ func ClearCasbin(v int, p ...string) bool {
 
 }
 
-//@author: [piexlmax](https://github.com/piexlmax)
+//@author: xiaoliang
 //@function: Casbin
 //@description: 持久化到数据库  引入自定义规则
 //@return: *casbin.Enforcer
@@ -104,7 +101,7 @@ func Casbin() *casbin.SyncedEnforcer {
 	return syncedEnforcer
 }
 
-//@author: [piexlmax](https://github.com/piexlmax)
+//@author: xiaoliang
 //@function: ParamsMatch
 //@description: 自定义规则函数
 //@param: fullNameKey1 string, key2 string
@@ -116,7 +113,7 @@ func ParamsMatch(fullNameKey1 string, key2 string) bool {
 	return util.KeyMatch2(key1, key2)
 }
 
-//@author: [piexlmax](https://github.com/piexlmax)
+//@author: xiaoliang
 //@function: ParamsMatchFunc
 //@description: 自定义规则函数
 //@param: args ...interface{}

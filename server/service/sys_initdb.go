@@ -6,7 +6,6 @@ import (
 	"github.com/spf13/viper"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
-	"path/filepath"
 	"slotsevo-admin/config"
 	"slotsevo-admin/global"
 	"slotsevo-admin/model"
@@ -14,12 +13,11 @@ import (
 	"slotsevo-admin/utils"
 )
 
-//@author: [songzhibin97](https://github.com/songzhibin97)
+//@author: xiaoliang
 //@function: writeConfig
 //@description: 回写配置
 //@param:
 //@return: error
-
 func writeConfig(viper *viper.Viper, mysql config.Mysql) error {
 	global.SlotsConfig.Mysql = mysql
 	cs := utils.StructToMap(global.SlotsConfig)
@@ -29,22 +27,18 @@ func writeConfig(viper *viper.Viper, mysql config.Mysql) error {
 	return viper.WriteConfig()
 }
 
-//@author: [songzhibin97](https://github.com/songzhibin97)
+//@author: xiaoliang
 //@function: createTable
 //@description: 创建数据库(mysql)
 //@param: dsn string, driver string, createSql
 //@return: error
-
 func createTable(dsn string, driver string, createSql string) error {
 	db, err := sql.Open(driver, dsn)
 	if err != nil {
 		return err
 	}
 	defer func(db *sql.DB) {
-		err := db.Close()
-		if err != nil {
-
-		}
+		_ = db.Close()
 	}(db)
 	if err = db.Ping(); err != nil {
 		return err
@@ -63,12 +57,11 @@ func initDB(InitDBFunctions ...model.InitDBFunc) (err error) {
 	return nil
 }
 
-//@author: [songzhibin97](https://github.com/songzhibin97)
+//@author: xiaoliang
 //@function: InitDB
 //@description: 创建数据库并初始化
 //@param: authorityId string
 //@return: err error, treeMap map[string][]model.SysMenu
-
 func InitDB(gormConfig *gorm.Config) (*gorm.DB, error) {
 	var (
 		db  *gorm.DB
@@ -92,12 +85,8 @@ func InitDB(gormConfig *gorm.Config) (*gorm.DB, error) {
 	if err = writeConfig(global.SlotsVp, MysqlConfig); err != nil {
 		return db, err
 	}
-	m := global.SlotsConfig.Mysql
-	if m.Dbname == "" {
-		return db, nil
-	}
 
-	linkDns := m.Username + ":" + m.Password + "@tcp(" + m.Path + ")/" + m.Dbname + "?" + m.Config
+	linkDns := conf.Username + ":" + conf.Password + "@tcp(" + conf.Path + ")/" + conf.Dbname + "?" + conf.Config
 	mysqlConfig := mysql.Config{
 		DSN:                       linkDns, // DSN data source name
 		DefaultStringSize:         191,     // string 类型字段的默认长度
@@ -111,25 +100,18 @@ func InitDB(gormConfig *gorm.Config) (*gorm.DB, error) {
 		return db, nil
 	} else {
 		sqlDB, _ := db.DB()
-		sqlDB.SetMaxIdleConns(m.MaxIdleConns)
-		sqlDB.SetMaxOpenConns(m.MaxOpenConns)
+		sqlDB.SetMaxIdleConns(conf.MaxIdleConns)
+		sqlDB.SetMaxOpenConns(conf.MaxOpenConns)
 		global.SlotsDb = db
 	}
 
 	err = global.SlotsDb.AutoMigrate(
 		model.SysUser{},
-		//model.SysAuthority{},
+		model.SysAuthority{},
 		model.SysApi{},
 		model.SysBaseMenu{},
 		model.SysBaseMenuParameter{},
 		model.JwtBlacklist{},
-		//model.SysDictionary{},
-		//model.SysDictionaryDetail{},
-		//model.ExaFileUploadAndDownload{},
-		//model.ExaFile{},
-		//model.ExaFileChunk{},
-		//model.ExaSimpleUploader{},
-		//model.ExaCustomer{},
 		model.SysOperationRecord{},
 	)
 	if err != nil {
@@ -139,19 +121,14 @@ func InitDB(gormConfig *gorm.Config) (*gorm.DB, error) {
 	err = initDB(
 		source.Admin,
 		source.Api,
-		//source.AuthorityMenu,
-		//source.Authority,
-		//source.AuthoritiesMenus,
-		//source.Casbin,
-		//source.DataAuthorities,
-		//source.Dictionary,
-		//source.DictionaryDetail,
-		//source.File,
+		source.Authority,
+		source.AuthoritiesMenus,
+		source.Casbin,
+		source.DataAuthorities,
 		source.BaseMenu)
 	if err != nil {
 		_ = writeConfig(global.SlotsVp, MysqlConfig)
 		return db, err
 	}
-	global.SlotsConfig.AutoCode.Root, _ = filepath.Abs("..")
 	return db, nil
 }

@@ -17,18 +17,14 @@ type DataAuthority struct {
 }
 
 var infos = []DataAuthority{
-	{"888", "888"},
-	{"888", "8881"},
-	{"888", "9528"},
-	{"9528", "8881"},
-	{"9528", "9528"},
+	{"1000", "1000"},
 }
 
-//@author: [SliverHorn](https://github.com/SliverHorn)
+//@author: xiaoliang
 //@description: sys_data_authority_id 表数据初始化
 func (d *dataAuthorities) Init() error {
 	return global.SlotsDb.Table("sys_data_authority_id").Transaction(func(tx *gorm.DB) error {
-		if tx.Where("sys_authority_authority_id IN ('888', '9528') ").Find(&[]DataAuthority{}).RowsAffected == 5 {
+		if tx.First(&[]DataAuthority{}).RowsAffected > 0 {
 			color.Danger.Println("\n[Mysql] --> sys_data_authority_id 表初始数据已存在!")
 			return nil
 		}
