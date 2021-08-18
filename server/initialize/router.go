@@ -13,7 +13,6 @@ import (
 )
 
 // 初始化总路由
-
 func Routers() *gin.Engine {
 	var Router = gin.Default()
 	Router.StaticFS(global.SlotsConfig.Local.Path, http.Dir(global.SlotsConfig.Local.Path)) // 为用户头像和文件提供静态地址
@@ -21,6 +20,7 @@ func Routers() *gin.Engine {
 	global.SlotsLog.Info("use middleware logger")
 	// 跨域
 	//Router.Use(middleware.Cors()) // 如需跨域可以打开
+	Router.Use(middleware.Recover()) // recovery panic
 	global.SlotsLog.Info("use middleware cors")
 	Router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	global.SlotsLog.Info("register swagger handler")

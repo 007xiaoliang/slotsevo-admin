@@ -73,7 +73,6 @@ func GetPolicyPathByAuthorityId(authorityId string) (pathMaps []request.CasbinIn
 //@description: 清除匹配的权限
 //@param: v int, p ...string
 //@return: bool
-
 func ClearCasbin(v int, p ...string) bool {
 	e := Casbin()
 	success, _ := e.RemoveFilteredPolicy(v, p...)
@@ -85,7 +84,6 @@ func ClearCasbin(v int, p ...string) bool {
 //@function: Casbin
 //@description: 持久化到数据库  引入自定义规则
 //@return: *casbin.Enforcer
-
 var (
 	syncedEnforcer *casbin.SyncedEnforcer
 	once           sync.Once
@@ -106,7 +104,6 @@ func Casbin() *casbin.SyncedEnforcer {
 //@description: 自定义规则函数
 //@param: fullNameKey1 string, key2 string
 //@return: bool
-
 func ParamsMatch(fullNameKey1 string, key2 string) bool {
 	key1 := strings.Split(fullNameKey1, "?")[0]
 	// 剥离路径后再使用casbin的keyMatch2
@@ -118,7 +115,6 @@ func ParamsMatch(fullNameKey1 string, key2 string) bool {
 //@description: 自定义规则函数
 //@param: args ...interface{}
 //@return: interface{}, error
-
 func ParamsMatchFunc(args ...interface{}) (interface{}, error) {
 	name1 := args[0].(string)
 	name2 := args[1].(string)
