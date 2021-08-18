@@ -133,7 +133,7 @@
       <!--  Captcha end  -->
 
       <!--  dbType start  -->
-      <template v-if="config.system.dbType == 'mysql'">
+      <template v-if="config.system.dbType === 'mysql'">
         <h2>mysql admin数据库配置</h2>
         <el-form-item label="username">
           <el-input v-model="config.mysql.username"></el-input>
@@ -157,7 +157,7 @@
           <el-checkbox v-model="config.mysql.logMode"></el-checkbox>
         </el-form-item>
       </template>
-      <template v-if="config.system.dbType == 'sqlite'">
+      <template v-if="config.system.dbType === 'sqlite'">
         <h2>sqlite admin数据库配置</h2>
         <el-form-item label="path">
           <el-input v-model="config.mysql.path"></el-input>
@@ -172,7 +172,7 @@
           <el-checkbox v-model="config.mysql.logger"></el-checkbox>
         </el-form-item>
       </template>
-      <template v-if="config.system.dbType == 'sqlserver'">
+      <template v-if="config.system.dbType === 'sqlserver'">
         <h2>sqlserver admin数据库配置</h2>
         <el-form-item label="username">
           <el-input v-model="config.sqlserver.username"></el-input>
@@ -196,7 +196,7 @@
           <el-checkbox v-model="config.sqlserver.logger"></el-checkbox>
         </el-form-item>
       </template>
-      <template v-if="config.system.dbType == 'postgresql'">
+      <template v-if="config.system.dbType === 'postgresql'">
         <h2>postgresql admin数据库配置</h2>
         <el-form-item label="username">
           <el-input v-model="config.mysql.username"></el-input>
@@ -229,13 +229,13 @@
       <!--  dbType end  -->
 
       <!--  ossType start  -->
-      <template v-if="config.system.ossType == 'local'">
+      <template v-if="config.system.ossType === 'local'">
         <h2>本地上传配置</h2>
         <el-form-item label="本地文件路径">
           <el-input v-model="config.local.path"></el-input>
         </el-form-item>
       </template>
-      <template v-if="config.system.ossType == 'qiniu'">
+      <template v-if="config.system.ossType === 'qiniu'">
         <h2>qiniu上传配置</h2>
         <el-form-item label="存储区域">
           <el-input v-model="config.qiniu.zone"></el-input>
@@ -259,7 +259,7 @@
           <el-checkbox v-model="config.qiniu.useCdnDomains">开启</el-checkbox>
         </el-form-item>
       </template>
-       <template v-if="config.system.ossType == 'tencent-cos'">
+       <template v-if="config.system.ossType === 'tencent-cos'">
         <h2>腾讯云COS上传配置</h2>
         <el-form-item label="bucket">
           <el-input v-model="config.tencentCOS.bucket"></el-input>
@@ -280,7 +280,7 @@
           <el-input v-model="config.tencentCOS.baseURL"></el-input>
         </el-form-item>
       </template>
-       <template v-if="config.system.ossType == 'aliyun-oss'">
+       <template v-if="config.system.ossType === 'aliyun-oss'">
         <h2>阿里云OSS上传配置</h2>
         <el-form-item label="endpoint">
           <el-input v-model="config.aliyunOSS.endpoint"></el-input>
@@ -338,14 +338,14 @@ export default {
   methods: {
     async initForm() {
       const res = await getSystemConfig();
-      if (res.code == 0) {
+      if (res.code === 0) {
         this.config = res.data.config;
       }
     },
     reload() {},
     async update() {
       const res = await setSystemConfig({ config: this.config });
-      if (res.code == 0) {
+      if (res.code === 0) {
         this.$message({
           type: "success",
           message: "配置文件设置成功"
@@ -355,7 +355,7 @@ export default {
     },
     async email() {
       const res = await emailTest();
-      if (res.code == 0) {
+      if (res.code === 0) {
         this.$message({
           type: "success",
           message: "邮件发送成功"

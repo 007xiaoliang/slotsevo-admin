@@ -12,10 +12,7 @@
       <!-- 分块滑动功能 -->
       <el-main class="main-cont main-right">
         <transition :duration="{ enter: 800, leave: 100 }" mode="out-in" name="el-fade-in-linear">
-          <div
-              :style="{width: `calc(100% - ${isMobile?'0px':isCollapse?'54px':'220px'})`}"
-              class="topfix"
-          >
+          <div :style="{width: `calc(100% - ${isMobile?'0px':isCollapse?'54px':'220px'})`}" class="topfix">
             <el-row>
               <!-- :xs="8" :sm="6" :md="4" :lg="3" :xl="1" -->
               <el-header class="header-cont">
@@ -36,20 +33,15 @@
                 </el-col>
                 <el-col :xs="12" :lg="9" :md="9" :sm="14" :xl="9">
                   <div class="fl-right right-box">
-                    <Search/>
-                    <Screenfull class="screenfull" :style="{cursor:'pointer'}"></Screenfull>
                     <el-dropdown>
-                  <span class="header-avatar">
-                   <CustomPic/>
-                    <span style="margin-left: 5px">{{ userInfo.nickName }}</span>
-                    <i class="el-icon-arrow-down"></i>
-                  </span>
+                      <span class="header-avatar">
+                       <CustomPic/>
+                        <span style="margin-left: 5px">{{ userInfo.nickName }}</span>
+                        <i class="el-icon-arrow-down"></i>
+                      </span>
                       <el-dropdown-menu class="dropdown-group" slot="dropdown">
                         <el-dropdown-item>
-                      <span>
-                        更多信息
-                        <el-badge is-dot/>
-                      </span>
+                      <span>更多信息<el-badge is-dot/></span>
                         </el-dropdown-item>
                         <el-dropdown-item @click.native="toPerson" icon="el-icon-s-custom">个人信息</el-dropdown-item>
                         <el-dropdown-item @click.native="LoginOut" icon="el-icon-table-lamp">登 出</el-dropdown-item>
@@ -86,8 +78,6 @@
 <script>
 import Aside from '@/view/layout/aside'
 import HistoryComponent from '@/view/layout/aside/historyComponent/history'
-import Screenfull from '@/view/layout/screenfull'
-import Search from '@/view/layout/search/search'
 import BottomInfo from '@/view/layout/bottomInfo/bottomInfo'
 import {mapGetters, mapActions} from 'vuex'
 import CustomPic from '@/components/customPic'
@@ -109,8 +99,6 @@ export default {
   components: {
     Aside,
     HistoryComponent,
-    Screenfull,
-    Search,
     BottomInfo,
     CustomPic
   },

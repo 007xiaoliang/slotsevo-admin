@@ -1,45 +1,37 @@
 <template>
   <div class="router-history">
     <el-tabs
-      :closable="!(historys.length==1&&this.$route.name==defaultRouter)"
-      @contextmenu.prevent.native="openContextMenu($event)"
-      @tab-click="changeTab"
-      @tab-remove="removeTab"
-      type="card"
-      v-model="activeValue"
+        :closable="!(historys.length===1&&this.$route.name===defaultRouter)"
+        @contextmenu.prevent.native="openContextMenu($event)"
+        @tab-click="changeTab"
+        @tab-remove="removeTab"
+        type="card"
+        v-model="activeValue"
     >
       <el-tab-pane
-        :key="item.name + JSON.stringify(item.query)+JSON.stringify(item.params)"
-        :label="item.meta.title"
-        :name="item.name + JSON.stringify(item.query)+JSON.stringify(item.params)"
-        :tab="item"
-        v-for="item in historys"
+          :key="item.name + JSON.stringify(item.query)+JSON.stringify(item.params)"
+          :label="item.meta.title"
+          :name="item.name + JSON.stringify(item.query)+JSON.stringify(item.params)"
+          :tab="item"
+          v-for="item in historys"
       ></el-tab-pane>
     </el-tabs>
-
-    <!--自定义右键菜单html代码-->
-    <ul :style="{left:left+'px',top:top+'px'}" class="contextmenu" v-show="contextMenuVisible">
-      <li @click="closeAll">关闭所有</li>
-      <li @click="closeLeft">关闭左侧</li>
-      <li @click="closeRight">关闭右侧</li>
-      <li @click="closeOther">关闭其他</li>
-    </ul>
   </div>
 </template>
 <script>
-import { mapGetters } from "vuex";
- const getFmtString = (item)=>{
-         return item.name +
-            JSON.stringify(item.query) +
-            JSON.stringify(item.params)
-    }
+import {mapGetters} from "vuex";
+
+const getFmtString = (item) => {
+  return item.name +
+      JSON.stringify(item.query) +
+      JSON.stringify(item.params)
+}
 export default {
   name: "HistoryComponent",
   data() {
     return {
       historys: [],
       activeValue: "",
-      contextMenuVisible: false,
       left: 0,
       top: 0,
       isCollapse: false,
@@ -71,12 +63,12 @@ export default {
       }
     ];
     this.historys =
-      JSON.parse(sessionStorage.getItem("historys")) || initHistorys;
-      if(!window.sessionStorage.getItem("activeValue")){
-        this.activeValue = getFmtString(this.$route)
-      }else{
-        this.activeValue = window.sessionStorage.getItem("activeValue");
-      }
+        JSON.parse(sessionStorage.getItem("historys")) || initHistorys;
+    if (!window.sessionStorage.getItem("activeValue")) {
+      this.activeValue = getFmtString(this.$route)
+    } else {
+      this.activeValue = window.sessionStorage.getItem("activeValue");
+    }
     this.setTab(this.$route);
   },
 
@@ -85,13 +77,11 @@ export default {
     this.$bus.off("mobile");
   },
   methods: {
-   
     openContextMenu(e) {
-      if (this.historys.length == 1 && this.$route.name == this.defaultRouter) {
+      if (this.historys.length === 1 && this.$route.name === this.defaultRouter) {
         return false;
       }
       if (e.srcElement.id) {
-        this.contextMenuVisible = true;
         let width;
         if (this.isCollapse) {
           width = 54;
@@ -117,22 +107,21 @@ export default {
           params: {}
         }
       ];
-      this.$router.push({ name: this.defaultRouter });
-      this.contextMenuVisible = false;
+      this.$router.push({name: this.defaultRouter});
       sessionStorage.setItem("historys", JSON.stringify(this.historys));
     },
     closeLeft() {
       let right;
       const rightIndex = this.historys.findIndex(item => {
-        if (getFmtString(item) == this.rightActive) {
+        if (getFmtString(item) === this.rightActive) {
           right = item;
         }
         return (
-          getFmtString(item) == this.rightActive
+            getFmtString(item) === this.rightActive
         );
       });
       const activeIndex = this.historys.findIndex(
-        item => getFmtString(item) == this.activeValue
+          item => getFmtString(item) === this.activeValue
       );
       this.historys.splice(0, rightIndex);
       if (rightIndex > activeIndex) {
@@ -143,13 +132,13 @@ export default {
     closeRight() {
       let right;
       const leftIndex = this.historys.findIndex(item => {
-        if ( getFmtString(item) ==  this.rightActive ) {
+        if (getFmtString(item) === this.rightActive) {
           right = item;
         }
-        return ( getFmtString(item) == this.rightActive );
+        return (getFmtString(item) === this.rightActive);
       });
       const activeIndex = this.historys.findIndex(
-        item => getFmtString(item) == this.activeValue
+          item => getFmtString(item) === this.activeValue
       );
       this.historys.splice(leftIndex + 1, this.historys.length);
       if (leftIndex < activeIndex) {
@@ -160,27 +149,27 @@ export default {
     closeOther() {
       let right;
       this.historys = this.historys.filter(item => {
-        if ( getFmtString(item) == this.rightActive
+        if (getFmtString(item) === this.rightActive
         ) {
           right = item;
         }
-        return ( getFmtString(item) == this.rightActive
+        return (getFmtString(item) === this.rightActive
         );
       });
       this.$router.push(right);
       sessionStorage.setItem("historys", JSON.stringify(this.historys));
     },
     isSame(route1, route2) {
-      if (route1.name != route2.name) {
+      if (route1.name !== route2.name) {
         return false;
       }
       for (let key in route1.query) {
-        if (route1.query[key] != route2.query[key]) {
+        if (route1.query[key] !== route2.query[key]) {
           return false;
         }
       }
       for (let key in route1.params) {
-        if (route1.params[key] != route2.params[key]) {
+        if (route1.params[key] !== route2.params[key]) {
           return false;
         }
       }
@@ -196,8 +185,8 @@ export default {
         this.historys.push(obj);
       }
       window.sessionStorage.setItem(
-        "activeValue",
-        getFmtString(this.$route)
+          "activeValue",
+          getFmtString(this.$route)
       );
     },
     changeTab(component) {
@@ -210,13 +199,13 @@ export default {
     },
     removeTab(tab) {
       const index = this.historys.findIndex(
-        item => getFmtString(item) ==  tab
+          item => getFmtString(item) === tab
       );
       if (
-        getFmtString(this.$route) == tab
+          getFmtString(this.$route) === tab
       ) {
-        if (this.historys.length == 1) {
-          this.$router.push({ name: this.defaultRouter });
+        if (this.historys.length === 1) {
+          this.$router.push({name: this.defaultRouter});
         } else {
           if (index < this.historys.length - 1) {
             this.$router.push({
@@ -237,23 +226,12 @@ export default {
     }
   },
   watch: {
-    contextMenuVisible() {
-      if (this.contextMenuVisible) {
-        document.body.addEventListener("click", () => {
-          this.contextMenuVisible = false;
-        });
-      } else {
-        document.body.removeEventListener("click", () => {
-          this.contextMenuVisible = false;
-        });
-      }
-    },
     $route(to, now) {
       this.historys = this.historys.filter(item => !item.meta.closeTab);
       this.setTab(to);
       sessionStorage.setItem("historys", JSON.stringify(this.historys));
       this.activeValue = window.sessionStorage.getItem("activeValue");
-      if (now && to && now.name == to.name) {
+      if (now && to && now.name === to.name) {
         this.$bus.$emit("reload");
       }
     }
@@ -275,10 +253,12 @@ export default {
   color: #333;
   box-shadow: 2px 2px 3px 0 rgba(0, 0, 0, 0.2);
 }
+
 .contextmenu li {
   margin: 0;
   padding: 7px 16px;
 }
+
 .contextmenu li:hover {
   background: #f2f2f2;
   cursor: pointer;

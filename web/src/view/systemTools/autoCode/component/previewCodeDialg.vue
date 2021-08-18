@@ -44,7 +44,7 @@ export default {
         }
       );
         for(const key in this.previewCode){
-            if(this.activeName == ""){
+            if(this.activeName === ""){
                 this.activeName = key
             }
             document.getElementById(key).innerHTML = marked(this.previewCode[key])
@@ -54,5 +54,5 @@ export default {
 </script>
 
 <style lang="scss">
-    
+
 </style>

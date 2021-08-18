@@ -270,20 +270,20 @@ export default {
             const option = {
               title: item.meta.title,
               ID: String(item.ID),
-              disabled: disabled || item.ID == this.form.ID,
+              disabled: disabled || item.ID === this.form.ID,
               children: []
             };
             this.setMenuOptions(
               item.children,
               option.children,
-              disabled || item.ID == this.form.ID
+              disabled || item.ID === this.form.ID
             );
             optionsData.push(option);
           } else {
             const option = {
               title: item.meta.title,
               ID: String(item.ID),
-              disabled: disabled || item.ID == this.form.ID
+              disabled: disabled || item.ID === this.form.ID
             };
             optionsData.push(option);
           }
@@ -319,12 +319,12 @@ export default {
       })
         .then(async () => {
           const res = await deleteBaseMenu({ ID });
-          if (res.code == 0) {
+          if (res.code === 0) {
             this.$message({
               type: "success",
               message: "删除成功!"
             });
-            if (this.tableData.length == 1 && this.page > 1 ) {
+            if (this.tableData.length === 1 && this.page > 1 ) {
               this.page--;
             }
             this.getTableData();
@@ -371,7 +371,7 @@ export default {
           } else {
             res = await addBaseMenu(this.form);
           }
-          if (res.code == 0) {
+          if (res.code === 0) {
             this.$message({
               type: "success",
               message: this.isEdit ? "编辑成功" : "添加成功!"

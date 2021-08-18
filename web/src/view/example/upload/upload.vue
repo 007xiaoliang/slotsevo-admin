@@ -111,12 +111,12 @@ export default {
       })
         .then(async () => {
           const res = await deleteFile(row);
-          if (res.code == 0) {
+          if (res.code === 0) {
             this.$message({
               type: "success",
               message: "删除成功!"
             });
-            if (this.tableData.length == 1 && this.page > 1 ) {
+            if (this.tableData.length === 1 && this.page > 1 ) {
               this.page--;
             }
             this.getTableData();
@@ -146,12 +146,12 @@ export default {
     },
     uploadSuccess(res) {
       this.fullscreenLoading = false;
-      if (res.code == 0) {
+      if (res.code === 0) {
         this.$message({
           type: "success",
           message: "上传成功"
         });
-        if (res.code == 0) {
+        if (res.code === 0) {
           this.getTableData();
         }
       } else {

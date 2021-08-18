@@ -2,7 +2,7 @@
   <el-submenu :popper-append-to-body="false" ref="subMenu" :index="routerInfo.name">
     <template slot="title">
       <i :class="'el-icon-'+routerInfo.meta.icon"></i>
-      <span slot="title">{{routerInfo.meta.title}}</span>
+      <span slot="title">{{ routerInfo.meta.title }}</span>
     </template>
     <slot></slot>
   </el-submenu>
@@ -13,7 +13,7 @@ export default {
   name: 'AsyncSubmenu',
   props: {
     routerInfo: {
-      default: function() {
+      default: function () {
         return null
       },
       type: Object

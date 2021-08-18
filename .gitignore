@@ -22,9 +22,9 @@ yarn-error.log*
 *.sln
 *.sw?
 
-go.sum
+#go.sum
 /server/log/
-/server/gva
+#/server/gva
 /server/latest_log
 
 *.iml

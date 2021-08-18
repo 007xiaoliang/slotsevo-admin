@@ -105,7 +105,7 @@ export default {
     async updateCustomer(row) {
       const res = await getExaCustomer({ ID: row.ID });
       this.type = "update";
-      if (res.code == 0) {
+      if (res.code === 0) {
         this.form = res.data.customer;
         this.dialogFormVisible = true;
       }
@@ -120,12 +120,12 @@ export default {
     async deleteCustomer(row) {
       row.visible = false;
       const res = await deleteExaCustomer({ ID: row.ID });
-      if (res.code == 0) {
+      if (res.code === 0) {
         this.$message({
           type: "success",
           message: ""
         });
-        if (this.tableData.length == 1 && this.page > 1 ) {
+        if (this.tableData.length === 1 && this.page > 1 ) {
           this.page--;
         }
         this.getTableData();
@@ -145,7 +145,7 @@ export default {
           break;
       }
 
-      if (res.code == 0) {
+      if (res.code === 0) {
         this.closeDialog();
         this.getTableData();
       }

@@ -39,7 +39,7 @@ export default {
       const params = {};
       ele.route.parameters &&
         ele.route.parameters.map(item => {
-          if (item.type == "query") {
+          if (item.type === "query") {
             query[item.key] = item.value;
           } else {
             params[item.key] = item.value;

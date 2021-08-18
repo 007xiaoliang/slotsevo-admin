@@ -3,7 +3,7 @@ import { Message } from 'element-ui';
 
 const handleFileError = (res, fileName) => {
     if (typeof(res.data) !== "undefined") {
-        if (res.data.type == "application/json") {
+        if (res.data.type === "application/json") {
             const reader = new FileReader();
             reader.onload = function() {
                 let message = JSON.parse(reader.result).msg;

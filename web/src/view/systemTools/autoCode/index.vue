@@ -94,13 +94,13 @@
           <el-button
             size="mini"
             type="text"
-            :disabled="scope.$index == 0"
+            :disabled="scope.$index === 0"
             @click="moveUpField(scope.$index)"
           >上移</el-button>
           <el-button
             size="mini"
             type="text"
-            :disabled="(scope.$index + 1) == form.fields.length"
+            :disabled="(scope.$index + 1) === form.fields.length"
             @click="moveDownField(scope.$index)"
           >下移</el-button>
           <el-popover placement="top" v-model="scope.row.visible">
@@ -222,7 +222,7 @@ export default {
       }
     },
     moveUpField(index) {
-      if (index == 0) {
+      if (index === 0) {
         return;
       }
       const oldUpField = this.form.fields[index - 1];
@@ -231,7 +231,7 @@ export default {
     },
     moveDownField(index) {
       const fCount = this.form.fields.length;
-      if (index == fCount - 1) {
+      if (index === fCount - 1) {
         return;
       }
       const oldDownField = this.form.fields[index + 1];
@@ -244,7 +244,7 @@ export default {
           this.dialogMiddle.fieldName = toUpperCase(
             this.dialogMiddle.fieldName
           );
-          if (this.addFlag == "add") {
+          if (this.addFlag === "add") {
             this.form.fields.push(this.dialogMiddle);
           }
           this.dialogFlag = false;
@@ -254,7 +254,7 @@ export default {
       });
     },
     closeDialog() {
-      if (this.addFlag == "edit") {
+      if (this.addFlag === "edit") {
         this.dialogMiddle = this.bk;
       }
       this.dialogFlag = false;
@@ -271,7 +271,7 @@ export default {
         return false;
       }
       if (
-        this.form.fields.some(item => item.fieldName == this.form.structName)
+        this.form.fields.some(item => item.fieldName === this.form.structName)
       ) {
         this.$message({
           type: "error",
@@ -282,7 +282,7 @@ export default {
       this.$refs.autoCodeForm.validate(async valid => {
         if (valid) {
           this.form.structName = toUpperCase(this.form.structName);
-          if (this.form.structName == this.form.abbreviation) {
+          if (this.form.structName === this.form.abbreviation) {
             this.$message({
               type: "error",
               message: "structName和struct简称不能相同"
@@ -291,12 +291,12 @@ export default {
           }
           if(isPreview){
             const data = await preview(this.form);
-            console.log(data.code == 0)
+            console.log(data.code === 0)
             this.preViewCode = data.data.autoCode
             this.previewFlag = true
           }else{
             const data = await createTemp(this.form);
-            if (data.headers?.success == "false") {
+            if (data.headers?.success === "false") {
               return;
             } else {
               this.$message({
@@ -329,13 +329,13 @@ export default {
     },
     async getDb() {
       const res = await getDB();
-      if (res.code == 0) {
+      if (res.code === 0) {
         this.dbOptions = res.data.dbs;
       }
     },
     async getTable() {
       const res = await getTable({ dbName: this.dbform.dbName });
-      if (res.code == 0) {
+      if (res.code === 0) {
         this.tableOptions = res.data.tables;
       }
       this.dbform.tableName = "";
@@ -343,7 +343,7 @@ export default {
     async getColumn() {
       const gormModelList = ["id", "created_at", "updated_at", "deleted_at"];
       const res = await getColumn(this.dbform);
-      if (res.code == 0) {
+      if (res.code === 0) {
         const tbHump = toHump(this.dbform.tableName);
         this.form.structName = toUpperCase(tbHump);
         this.form.tableName = this.dbform.tableName;
@@ -354,7 +354,7 @@ export default {
         this.form.fields = [];
         res.data.columns &&
           res.data.columns.map(item => {
-            if (!gormModelList.some(gormfd => gormfd == item.columnName)) {
+            if (!gormModelList.some(gormfd => gormfd === item.columnName)) {
               const fbHump = toHump(item.columnName);
               this.form.fields.push({
                 fieldName: toUpperCase(fbHump),

@@ -61,7 +61,7 @@ export default {
               return (
                 notUploadedChunks &&
                 notUploadedChunks.some(
-                  item => item.chunkNumber == chunk.offset + 1
+                  item => item.chunkNumber === chunk.offset + 1
                 )
               );
           }
@@ -98,7 +98,7 @@ export default {
         file.uniqueIdentifier = md5;
         if (md5 != "") {
           const res = await checkFileMd5({ md5: md5 });
-          if (res.code == 0) {
+          if (res.code === 0) {
             if (res.data.isDone) {
               // 上传成功过
               isUploaded = true;
@@ -118,7 +118,7 @@ export default {
           }
         }
 
-        
+
       };
       fileReader.onerror = function() {
         this.error(

@@ -172,12 +172,12 @@ export default {
           ids.push(item.ID);
         });
       const res = await deleteSysOperationRecordByIds({ ids });
-      if (res.code == 0) {
+      if (res.code === 0) {
         this.$message({
           type: "success",
           message: "删除成功"
         });
-        if (this.tableData.length == ids.length && this.page > 1) {
+        if (this.tableData.length === ids.length && this.page > 1) {
           this.page--;
         }
         this.deleteVisible = false;
@@ -187,12 +187,12 @@ export default {
     async deleteSysOperationRecord(row) {
       row.visible = false;
       const res = await deleteSysOperationRecord({ ID: row.ID });
-      if (res.code == 0) {
+      if (res.code === 0) {
         this.$message({
           type: "success",
           message: "删除成功"
         });
-        if (this.tableData.length == 1 && this.page > 1 ) {
+        if (this.tableData.length === 1 && this.page > 1 ) {
           this.page--;
         }
         this.getTableData();

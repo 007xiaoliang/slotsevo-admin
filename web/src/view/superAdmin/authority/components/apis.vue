@@ -86,7 +86,7 @@ export default {
         authorityId: this.activeUserId,
         casbinInfos
       })
-      if (res.code == 0) {
+      if (res.code === 0) {
         this.$message({ type: 'success', message: "api设置成功" })
       }
     }
@@ -95,7 +95,7 @@ export default {
     // 获取api并整理成树结构
     const res2 = await getAllApis()
     const apis = res2.data.apis
-   
+
     this.apiTreeData = this.buildApiTree(apis)
     const res = await getPolicyPathByAuthorityId({
       authorityId: this.row.authorityId

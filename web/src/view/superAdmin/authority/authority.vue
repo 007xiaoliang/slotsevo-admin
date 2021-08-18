@@ -186,12 +186,12 @@ export default {
       })
         .then(async () => {
           const res = await deleteAuthority({ authorityId: row.authorityId });
-          if (res.code == 0) {
+          if (res.code === 0) {
             this.$message({
               type: "success",
               message: "删除成功!"
             });
-            if (this.tableData.length == 1 && this.page > 1 ) {
+            if (this.tableData.length === 1 && this.page > 1 ) {
               this.page--;
             }
             this.getTableData();
@@ -224,7 +224,7 @@ export default {
     // 确定弹窗
 
     async enterDialog() {
-      if (this.form.authorityId == "0") {
+      if (this.form.authorityId === "0") {
         this.$message({
           type: "error",
           message: "角色id不能为0"
@@ -237,7 +237,7 @@ export default {
             case "add":
               {
                 const res = await createAuthority(this.form);
-                if (res.code == 0) {
+                if (res.code === 0) {
                   this.$message({
                     type: "success",
                     message: "添加成功!"
@@ -250,7 +250,7 @@ export default {
             case "edit":
               {
                 const res = await updateAuthority(this.form);
-                if (res.code == 0) {
+                if (res.code === 0) {
                   this.$message({
                     type: "success",
                     message: "添加成功!"
@@ -276,7 +276,7 @@ export default {
               data.authority.dataAuthorityId = this.copyForm.dataAuthorityId;
               data.oldAuthorityId = this.copyForm.authorityId;
               const res = await copyAuthority(data);
-              if (res.code == 0) {
+              if (res.code === 0) {
                 this.$message({
                   type: "success",
                   message: "复制成功！"
@@ -308,20 +308,20 @@ export default {
             const option = {
               authorityId: item.authorityId,
               authorityName: item.authorityName,
-              disabled: disabled || item.authorityId == this.form.authorityId,
+              disabled: disabled || item.authorityId === this.form.authorityId,
               children: []
             };
             this.setAuthorityOptions(
               item.children,
               option.children,
-              disabled || item.authorityId == this.form.authorityId
+              disabled || item.authorityId === this.form.authorityId
             );
             optionsData.push(option);
           } else {
             const option = {
               authorityId: item.authorityId,
               authorityName: item.authorityName,
-              disabled: disabled || item.authorityId == this.form.authorityId
+              disabled: disabled || item.authorityId === this.form.authorityId
             };
             optionsData.push(option);
           }

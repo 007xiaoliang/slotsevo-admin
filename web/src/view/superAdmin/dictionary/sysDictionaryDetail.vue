@@ -178,7 +178,7 @@ export default {
     onSubmit() {
       this.page = 1;
       this.pageSize = 10;
-      if (this.searchInfo.status == "") {
+      if (this.searchInfo.status === "") {
         this.searchInfo.status = null;
       }
       this.getTableData();
@@ -186,7 +186,7 @@ export default {
     async updateSysDictionaryDetail(row) {
       const res = await findSysDictionaryDetail({ ID: row.ID });
       this.type = "update";
-      if (res.code == 0) {
+      if (res.code === 0) {
         this.formData = res.data.resysDictionaryDetail;
         this.dialogFormVisible = true;
       }
@@ -204,12 +204,12 @@ export default {
     async deleteSysDictionaryDetail(row) {
       row.visible = false;
       const res = await deleteSysDictionaryDetail({ ID: row.ID });
-      if (res.code == 0) {
+      if (res.code === 0) {
         this.$message({
           type: "success",
           message: "删除成功"
         });
-        if (this.tableData.length == 1 && this.page > 1 ) {
+        if (this.tableData.length === 1 && this.page > 1 ) {
           this.page--;
         }
         this.getTableData();
@@ -231,7 +231,7 @@ export default {
             res = await createSysDictionaryDetail(this.formData);
             break;
         }
-        if (res.code == 0) {
+        if (res.code === 0) {
           this.$message({
             type: "success",
             message: "创建/更改成功"

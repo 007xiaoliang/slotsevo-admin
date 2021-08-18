@@ -16,7 +16,7 @@
           <span>{{ file.name }}</span>
           <span class="percentage" >{{percentage}}%</span>
           <el-progress  :show-text='false' :text-inside="false" :stroke-width="2" :percentage="percentage"></el-progress>
-        </div> 
+        </div>
       </transition>
    </div>
      <!-- <span
@@ -49,7 +49,7 @@ export default {
     }
   },
   created(){
-   
+
   },
   methods: {
     // 选中文件的函数
@@ -114,12 +114,12 @@ export default {
     },
     getFile() {
       // 确定按钮
-      if (this.file == null) {
+      if (this.file === null) {
         this.$message('请先上传文件')
         return
       }
       this.percentage = Math.floor(((this.formDataList.length-this.waitNum)/this.formDataList.length)*100)
-      if(this.percentage == 100){
+      if(this.percentage === 100){
         this.percentageFlage = false
       }
       this.sliceFile() // 上传切片
@@ -144,7 +144,7 @@ export default {
       // 切片上传
       await axios.post(process.env.VUE_APP_BASE_API+"/fileUploadAndDownload/breakpointContinue",item.formData)
       this.waitNum-- // 百分数增加
-      if (this.waitNum == 0) {
+      if (this.waitNum === 0) {
         // 切片传完以后 合成文件
         const params = {
           fileName: this.file.name,
@@ -226,7 +226,7 @@ a {
   .el-divider{
     margin: 0 0 30px 0;
   }
- 
+
  .list{
    margin-top:15px;
  }

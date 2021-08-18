@@ -20,7 +20,7 @@ router.beforeEach(async (to, from, next) => {
         // 不在白名单中并且已经登陆的时候
         if (token) {
             // 添加flag防止多次获取动态路由和栈溢出
-            if (!asyncRouterFlag && store.getters['router/asyncRouters'].length == 0) {
+            if (!asyncRouterFlag && store.getters['router/asyncRouters'].length === 0) {
                 asyncRouterFlag++
                 await store.dispatch('router/SetAsyncRouter')
                 const asyncRouters = store.getters['router/asyncRouters']

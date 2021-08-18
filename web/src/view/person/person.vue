@@ -149,7 +149,7 @@ export default {
             password: this.pwdModify.password,
             newPassword: this.pwdModify.newPassword
           }).then((res) => {
-            if(res.code == 0){
+            if(res.code === 0){
               this.$message.success("修改密码成功！");
             }
             this.showPassword = false;
@@ -172,7 +172,7 @@ export default {
     },
     async enterImg(url) {
       const res = await setUserInfo({ headerImg: url, ID: this.userInfo.ID });
-      if (res.code == 0) {
+      if (res.code === 0) {
         this.ResetUserInfo({ headerImg: url });
         this.$message({
           type: "success",

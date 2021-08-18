@@ -67,7 +67,7 @@ export default {
     // 提交
       async authDataEnter(){
           const res = await setDataAuthority(this.row)
-          if(res.code == 0){
+          if(res.code === 0){
               this.$message({ type: 'success', message: "资源设置成功" })
           }
       },
