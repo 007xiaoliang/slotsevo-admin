@@ -43,7 +43,7 @@ timer:
   spec: '@daily'
   detail:
   - taskName: clear_log
-    keepDays: 3
+    keepDays: 1
 zap:
   level: info
   format: console
