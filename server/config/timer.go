@@ -7,7 +7,6 @@ type Timer struct {
 }
 
 type Detail struct {
-	TableName    string `mapstructure:"tableName" json:"tableName" yaml:"tableName"`          // 需要清理的表名
-	CompareField string `mapstructure:"compareField" json:"compareField" yaml:"compareField"` // 需要比较时间的字段
-	Interval     string `mapstructure:"interval" json:"interval" yaml:"interval"`             // 时间间隔
+	TaskName string `mapstructure:"taskName" json:"taskName" yaml:"taskName"` // 任务名称
+	KeepDays int    `mapstructure:"keepDays" json:"keepDays" yaml:"keepDays"` // 日志保留天数
 }

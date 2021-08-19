@@ -40,11 +40,10 @@ system:
   use-multipoint: false
 timer:
   start: true
-  spec: '@daily'
+  spec: '*/1 * * * *'
   detail:
-  - tableName: sys_operation_records
-    compareField: created_at
-    interval: 2160h
+  - taskName: clear_log
+    keepDays: 3
 zap:
   level: info
   format: console

@@ -10,10 +10,9 @@ import (
 func Timer() {
 	if global.SlotsConfig.Timer.Start {
 		for _, detail := range global.SlotsConfig.Timer.Detail {
-			fmt.Println(detail)
 			go func(detail config.Detail) {
-				_, _ = global.SlotsTimer.AddTaskByFunc("ClearDB", global.SlotsConfig.Timer.Spec, func() {
-					err := utils.ClearTable(global.SlotsDb, detail.TableName, detail.CompareField, detail.Interval)
+				_, _ = global.SlotsTimer.AddTaskByFunc(detail.TaskName, global.SlotsConfig.Timer.Spec, func() {
+					err := utils.ClearLog(detail.KeepDays, global.SlotsConfig.Zap.Director)
 					if err != nil {
 						fmt.Println("timer error:", err)
 					}
