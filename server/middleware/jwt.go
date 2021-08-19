@@ -55,7 +55,7 @@ func JWTAuth() gin.HandlerFunc {
 			if global.SlotsConfig.System.UseMultipoint {
 				err, RedisJwtToken := service.GetRedisJWT(newClaims.Username)
 				if err != nil {
-					global.SlotsLog.Error("get redis jwt failed", zap.Any("err", err))
+					global.TraceLog.Error("get redis jwt failed", zap.Any("err", err))
 				} else { // 当之前的取成功时才进行拉黑操作
 					_ = service.JsonInBlacklist(model.JwtBlacklist{Jwt: RedisJwtToken})
 				}

@@ -135,15 +135,15 @@ func (c *customLogger) Printf(message string, data ...interface{}) {
 	if global.SlotsConfig.Mysql.LogZap != "" {
 		switch len(data) {
 		case 0:
-			global.SlotsLog.Info(message)
+			global.TraceLog.Info(message)
 		case 1:
-			global.SlotsLog.Info("gorm", zap.Any("src", data[0]))
+			global.TraceLog.Info("gorm", zap.Any("src", data[0]))
 		case 2:
-			global.SlotsLog.Info("gorm", zap.Any("src", data[0]), zap.Any("duration", data[1]))
+			global.TraceLog.Info("gorm", zap.Any("src", data[0]), zap.Any("duration", data[1]))
 		case 3:
-			global.SlotsLog.Info("gorm", zap.Any("src", data[0]), zap.Any("duration", data[1]), zap.Any("rows", data[2]))
+			global.TraceLog.Info("gorm", zap.Any("src", data[0]), zap.Any("duration", data[1]), zap.Any("rows", data[2]))
 		case 4:
-			global.SlotsLog.Info("gorm", zap.Any("src", data[0]), zap.Any("duration", data[1]), zap.Any("rows", data[2]), zap.Any("sql", data[3]))
+			global.TraceLog.Info("gorm", zap.Any("src", data[0]), zap.Any("duration", data[1]), zap.Any("rows", data[2]), zap.Any("sql", data[3]))
 		}
 		return
 	}

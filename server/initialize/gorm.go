@@ -35,7 +35,7 @@ func GormMysql() *gorm.DB {
 	}
 	db, err := service.InitDB(gormConfig(m.LogMode))
 	if err != nil {
-		global.SlotsLog.Error("MySQL启动异常", zap.Any("err", err))
+		global.TraceLog.Error("MySQL启动异常", zap.Any("err", err))
 		os.Exit(0)
 	}
 	return db

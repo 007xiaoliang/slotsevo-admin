@@ -3,11 +3,10 @@ package router
 import (
 	"github.com/gin-gonic/gin"
 	"slotsevo-admin/api/v1"
-	"slotsevo-admin/middleware"
 )
 
 func InitSystemRouter(Router *gin.RouterGroup) {
-	SystemRouter := Router.Group("system").Use(middleware.OperationRecord())
+	SystemRouter := Router.Group("system")
 	{
 		SystemRouter.POST("getSystemConfig", v1.GetSystemConfig) // 获取配置文件内容
 		SystemRouter.POST("setSystemConfig", v1.SetSystemConfig) // 设置配置文件内容

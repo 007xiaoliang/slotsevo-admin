@@ -23,7 +23,7 @@ func Captcha(c *gin.Context) {
 	driver := base64Captcha.NewDriverDigit(global.SlotsConfig.Captcha.ImgHeight, global.SlotsConfig.Captcha.ImgWidth, global.SlotsConfig.Captcha.KeyLong, 0.7, 80)
 	cp := base64Captcha.NewCaptcha(driver, store)
 	if id, b64s, err := cp.Generate(); err != nil {
-		global.SlotsLog.Error("验证码获取失败!", zap.Any("err", err))
+		global.TraceLog.Error("验证码获取失败!", zap.Any("err", err))
 		response.FailWithMessage("验证码获取失败", c)
 	} else {
 		response.OkWithDetailed(response.SysCaptchaResponse{

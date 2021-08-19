@@ -54,13 +54,13 @@ func UpdateBaseMenu(menu model.SysBaseMenu) (err error) {
 		db := tx.Where("id = ?", menu.ID).Find(&oldMenu)
 		if oldMenu.Name != menu.Name {
 			if !errors.Is(tx.Where("id <> ? AND name = ?", menu.ID, menu.Name).First(&model.SysBaseMenu{}).Error, gorm.ErrRecordNotFound) {
-				global.SlotsLog.Debug("存在相同name修改失败")
+				global.TraceLog.Debug("存在相同name修改失败")
 				return errors.New("存在相同name修改失败")
 			}
 		}
 		txErr := tx.Unscoped().Delete(&model.SysBaseMenuParameter{}, "sys_base_menu_id = ?", menu.ID).Error
 		if txErr != nil {
-			global.SlotsLog.Debug(txErr.Error())
+			global.TraceLog.Debug(txErr.Error())
 			return txErr
 		}
 		if len(menu.Parameters) > 0 {
@@ -69,14 +69,14 @@ func UpdateBaseMenu(menu model.SysBaseMenu) (err error) {
 			}
 			txErr = tx.Create(&menu.Parameters).Error
 			if txErr != nil {
-				global.SlotsLog.Debug(txErr.Error())
+				global.TraceLog.Debug(txErr.Error())
 				return txErr
 			}
 		}
 
 		txErr = db.Updates(upDateMap).Error
 		if txErr != nil {
-			global.SlotsLog.Debug(txErr.Error())
+			global.TraceLog.Debug(txErr.Error())
 			return txErr
 		}
 		return nil

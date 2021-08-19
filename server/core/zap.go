@@ -12,7 +12,7 @@ import (
 
 var level zapcore.Level
 
-func Zap() (logger *zap.Logger) {
+func Zap() (traceLogger *zap.Logger, accessLogger *zap.Logger, baseSendLogger *zap.Logger, errorLogger *zap.Logger) {
 	if ok, _ := utils.PathExists(global.SlotsConfig.Zap.Director); !ok { // 判断是否有Director文件夹
 		fmt.Printf("create %v directory\n", global.SlotsConfig.Zap.Director)
 		_ = os.Mkdir(global.SlotsConfig.Zap.Director, os.ModePerm)
@@ -38,14 +38,23 @@ func Zap() (logger *zap.Logger) {
 	}
 
 	if level == zap.DebugLevel || level == zap.ErrorLevel {
-		logger = zap.New(getEncoderCore(), zap.AddStacktrace(level))
+		traceLogger = zap.New(getEncoderCore("trace"), zap.AddStacktrace(level))
+		accessLogger = zap.New(getEncoderCore("access"), zap.AddStacktrace(level))
+		baseSendLogger = zap.New(getEncoderCore("baseSend"), zap.AddStacktrace(level))
+		errorLogger = zap.New(getEncoderCore("error"), zap.AddStacktrace(level))
 	} else {
-		logger = zap.New(getEncoderCore())
+		traceLogger = zap.New(getEncoderCore("trace"))
+		accessLogger = zap.New(getEncoderCore("access"))
+		baseSendLogger = zap.New(getEncoderCore("baseSend"))
+		errorLogger = zap.New(getEncoderCore("error"))
 	}
 	if global.SlotsConfig.Zap.ShowLine {
-		logger = logger.WithOptions(zap.AddCaller())
+		traceLogger = traceLogger.WithOptions(zap.AddCaller())
+		accessLogger = accessLogger.WithOptions(zap.AddCaller())
+		baseSendLogger = baseSendLogger.WithOptions(zap.AddCaller())
+		errorLogger = baseSendLogger.WithOptions(zap.AddCaller())
 	}
-	return logger
+	return
 }
 
 // getEncoderConfig 获取zapcore.EncoderConfig
@@ -87,8 +96,8 @@ func getEncoder() zapcore.Encoder {
 }
 
 // getEncoderCore 获取Encoder的zapcore.Core
-func getEncoderCore() (core zapcore.Core) {
-	writer, err := utils.GetWriteSyncer() // 使用file-rotatelogs进行日志分割
+func getEncoderCore(logName string) (core zapcore.Core) {
+	writer, err := utils.GetWriteSyncer(logName) // 使用file-rotatelogs进行日志分割
 	if err != nil {
 		fmt.Printf("Get Write Syncer Failed err:%v", err.Error())
 		return
@@ -98,5 +107,5 @@ func getEncoderCore() (core zapcore.Core) {
 
 // 自定义日志输出时间格式
 func CustomTimeEncoder(t time.Time, enc zapcore.PrimitiveArrayEncoder) {
-	enc.AppendString(t.Format(global.SlotsConfig.Zap.Prefix + "2006/01/02 - 15:04:05.000"))
+	enc.AppendString(t.Format(global.SlotsConfig.Zap.Prefix + "2006/01/02 15:04:05.000"))
 }

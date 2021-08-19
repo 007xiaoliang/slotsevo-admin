@@ -112,7 +112,6 @@ func InitDB(gormConfig *gorm.Config) (*gorm.DB, error) {
 		model.SysBaseMenu{},
 		model.SysBaseMenuParameter{},
 		model.JwtBlacklist{},
-		model.SysOperationRecord{},
 	)
 	if err != nil {
 		_ = writeConfig(global.SlotsVp, MysqlConfig)

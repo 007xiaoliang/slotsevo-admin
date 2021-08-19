@@ -20,7 +20,7 @@ import (
 // @Router /menu/getMenu [post]
 func GetMenu(c *gin.Context) {
 	if err, menus := service.GetMenuTree(getUserAuthorityId(c)); err != nil {
-		global.SlotsLog.Error("获取失败!", zap.Any("err", err))
+		global.TraceLog.Error("获取失败!", zap.Any("err", err))
 		response.FailWithMessage("获取失败", c)
 	} else {
 		response.OkWithDetailed(response.SysMenusResponse{Menus: menus}, "获取成功", c)
@@ -43,7 +43,7 @@ func GetMenuList(c *gin.Context) {
 		return
 	}
 	if err, menuList, total := service.GetInfoList(); err != nil {
-		global.SlotsLog.Error("获取失败!", zap.Any("err", err))
+		global.TraceLog.Error("获取失败!", zap.Any("err", err))
 		response.FailWithMessage("获取失败", c)
 	} else {
 		response.OkWithDetailed(response.PageResult{

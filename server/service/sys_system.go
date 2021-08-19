@@ -42,15 +42,15 @@ func GetServerInfo() (server *utils.Server, err error) {
 	var s utils.Server
 	s.Os = utils.InitOS()
 	if s.Cpu, err = utils.InitCPU(); err != nil {
-		global.SlotsLog.Error("func utils.InitCPU() Failed!", zap.String("err", err.Error()))
+		global.TraceLog.Error("func utils.InitCPU() Failed!", zap.String("err", err.Error()))
 		return &s, err
 	}
 	if s.Rrm, err = utils.InitRAM(); err != nil {
-		global.SlotsLog.Error("func utils.InitRAM() Failed!", zap.String("err", err.Error()))
+		global.TraceLog.Error("func utils.InitRAM() Failed!", zap.String("err", err.Error()))
 		return &s, err
 	}
 	if s.Disk, err = utils.InitDisk(); err != nil {
-		global.SlotsLog.Error("func utils.InitDisk() Failed!", zap.String("err", err.Error()))
+		global.TraceLog.Error("func utils.InitDisk() Failed!", zap.String("err", err.Error()))
 		return &s, err
 	}
 

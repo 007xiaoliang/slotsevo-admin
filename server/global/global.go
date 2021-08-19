@@ -14,7 +14,9 @@ var (
 	SlotsRedis  *redis.Client
 	SlotsConfig config.Server
 	SlotsVp     *viper.Viper
-	//SlotsLog    *oplogging.Logger
-	SlotsLog   *zap.Logger
-	SlotsTimer = timer.NewTimerTask()
+	TraceLog    *zap.Logger
+	AccessLog   *zap.Logger
+	BaseSendLog *zap.Logger
+	ErrorLog    *zap.Logger
+	SlotsTimer  = timer.NewTimerTask()
 )

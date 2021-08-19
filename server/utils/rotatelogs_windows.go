@@ -13,10 +13,9 @@ import (
 //@function: GetWriteSyncer
 //@description: zap logger中加入file-rotatelogs
 //@return: zapcore.WriteSyncer, error
-
-func GetWriteSyncer() (zapcore.WriteSyncer, error) {
+func GetWriteSyncer(logName string) (zapcore.WriteSyncer, error) {
 	fileWriter, err := zaprotatelogs.New(
-		path.Join(global.SlotsConfig.Zap.Director, "%Y-%m-%d.log"),
+		path.Join(global.SlotsConfig.Zap.Director, logName+"_%Y-%m-%d.log"),
 		zaprotatelogs.WithMaxAge(7*24*time.Hour),
 		zaprotatelogs.WithRotationTime(24*time.Hour),
 	)

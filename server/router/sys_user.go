@@ -3,11 +3,10 @@ package router
 import (
 	"github.com/gin-gonic/gin"
 	"slotsevo-admin/api/v1"
-	"slotsevo-admin/middleware"
 )
 
 func InitUserRouter(Router *gin.RouterGroup) {
-	UserRouter := Router.Group("user").Use(middleware.OperationRecord())
+	UserRouter := Router.Group("user")
 	{
 		UserRouter.POST("register", v1.Register)
 		UserRouter.POST("changePassword", v1.ChangePassword)     // 修改密码
