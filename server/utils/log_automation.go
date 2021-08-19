@@ -1,8 +1,11 @@
 package utils
 
 import (
+	"go.uber.org/zap"
 	"os"
 	"path/filepath"
+	"runtime/debug"
+	"slotsevo-admin/global"
 	"strings"
 	"time"
 )
@@ -13,6 +16,14 @@ import (
 //@param: keepDays 保留天数, logPath log文件路径
 //@return: err
 func ClearLog(keepDays int, logPath string) error {
+	defer func() {
+		if err := recover(); err != nil {
+			global.ErrorLog.Error("[Recovery from panic]",
+				zap.Any("error", err),
+				zap.Any("stack", debug.Stack()),
+			)
+		}
+	}()
 	return walkDir(logPath, keepDays, remove)
 }
 

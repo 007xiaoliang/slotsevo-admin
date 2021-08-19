@@ -40,14 +40,13 @@ system:
   use-multipoint: false
 timer:
   start: true
-  spec: '*/1 * * * *'
+  spec: '@daily'
   detail:
   - taskName: clear_log
     keepDays: 3
 zap:
   level: info
   format: console
-  prefix: '[slotsevo-admin]'
   director: log
   link-name: latest_log
   showLine: false
