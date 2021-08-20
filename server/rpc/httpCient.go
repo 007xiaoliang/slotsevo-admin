@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/go-resty/resty/v2"
+	"go.uber.org/zap"
 	"slotsevo-admin/global"
 	"slotsevo-admin/utils"
 	"time"
@@ -42,12 +43,12 @@ func init() {
 	client.SetContentLength(true)
 
 	//middleware
-	//client.OnBeforeRequest(func(c *resty.Client, req *resty.Request) error {
-	//	global.BaseSendLog.Info("send request", zap.String("url", req.URL))
-	//	return nil
-	//})
-	//client.OnAfterResponse(func(c *resty.Client, resp *resty.Response) error {
-	//	global.BaseSendLog.Info("receive data", zap.Any("status", resp.Status()))
-	//	return nil
-	//})
+	client.OnBeforeRequest(func(c *resty.Client, req *resty.Request) error {
+		global.BaseSendLog.Info("send request", zap.String("url", req.URL))
+		return nil
+	})
+	client.OnAfterResponse(func(c *resty.Client, resp *resty.Response) error {
+		global.BaseSendLog.Info("receive data", zap.Any("status", resp.Status()))
+		return nil
+	})
 }
