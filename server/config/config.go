@@ -14,4 +14,5 @@ type Server struct {
 	// oss
 	Local Local `mapstructure:"local" json:"local" yaml:"local"`
 	Timer Timer `mapstructure:"timer" json:"timer" yaml:"timer"`
+	Rpc   Rpc   `mapstructure:"rpc" json:"rpc" yaml:"rpc"`
 }

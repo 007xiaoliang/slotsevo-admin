@@ -32,6 +32,13 @@ redis:
   db: 0
   addr: www.xiaoliang007.asia:6379
   password: ""
+rpc:
+  host: http://192.168.2.34
+  port: "7003"
+  timeout: 1
+  retryCount: 3
+  retryWaitTime: 5
+  retryMAxWaitTime: 20
 system:
   env: public
   addr: 8888
@@ -43,7 +50,9 @@ timer:
   spec: '@daily'
   detail:
   - taskName: clear_log
-    keepDays: 1
+    keepDays: 0
+  - taskName: ""
+    keepDays: 5
 zap:
   level: info
   format: console
