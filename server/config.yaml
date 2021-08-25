@@ -50,8 +50,6 @@ timer:
   spec: '@daily'
   detail:
   - taskName: clear_log
-    keepDays: 0
-  - taskName: ""
     keepDays: 5
 zap:
   level: info

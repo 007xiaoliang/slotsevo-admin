@@ -39,6 +39,7 @@ func Routers() *gin.Engine {
 		router.InitEmailRouter(PrivateGroup)  // 邮件相关路由
 		router.InitSystemRouter(PrivateGroup) // system相关路由
 		router.InitCasbinRouter(PrivateGroup) // 权限相关路由
+		router.InitRpcRouter(PrivateGroup)    // rpc相关路由
 	}
 	global.TraceLog.Info("router register success")
 	return Router

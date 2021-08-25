@@ -2,7 +2,6 @@ import axios from 'axios'; // 引入axios
 import {Message} from 'element-ui';
 import {store} from '@/store/index'
 import context from '@/main.js'
-import router from '@/router/index'
 
 const service = axios.create({
     baseURL: process.env.VUE_APP_BASE_API,
@@ -64,16 +63,6 @@ service.interceptors.response.use(
 
         if (response.headers["new-token"]) {
             store.commit('user/setToken', response.headers["new-token"])
-        }
-        if (response.data.code === 0) {
-            if (response.data.data?.needInit) {
-                Message({
-                    type: "info",
-                    message: "您是第一次使用，请初始化"
-                })
-                store.commit("user/NeedInit")
-                router.push({name: "init"})
-            }
         }
         if (response.data.code === 0 || response.headers.success === "true") {
             return response.data

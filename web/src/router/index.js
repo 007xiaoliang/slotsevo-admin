@@ -16,12 +16,6 @@ const baseRouters = [
         redirect: '/login'
     },
     {
-        path: "/init",
-        name: 'init',
-        component: () =>
-            import('@/view/init/init.vue')
-    },
-    {
         path: '/login',
         name: 'login',
         component: () =>

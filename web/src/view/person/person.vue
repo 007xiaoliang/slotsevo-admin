@@ -72,7 +72,6 @@
       </el-col>
     </el-row>
 
-    <ChooseImg ref="chooseImg" @enter-img="enterImg" />
 
     <el-dialog :visible.sync="showPassword" @close="clearPassword" title="修改密码" width="360px">
       <el-form :model="pwdModify" :rules="rules" label-width="80px" ref="modifyPwdForm">
@@ -94,7 +93,6 @@
   </div>
 </template>
 <script>
-import ChooseImg from "@/components/chooseImg";
 import { setUserInfo,changePassword } from "@/api/user";
 
 import { mapGetters, mapMutations } from "vuex";
@@ -132,9 +130,6 @@ export default {
         ]
       }
     };
-  },
-  components: {
-    ChooseImg
   },
   computed: {
     ...mapGetters("user", ["userInfo", "token"])

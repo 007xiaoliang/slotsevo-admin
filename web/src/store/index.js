@@ -4,7 +4,7 @@ import VuexPersistence from 'vuex-persist'
 
 import {user} from "@/store/module/user"
 import {router} from "@/store/module/router"
-import {dictionary} from "@/store/module/dictionary"
+import {rpcUser} from "@/store/module/rpcUser"
 
 Vue.use(Vuex)
 
@@ -17,7 +17,7 @@ export const store = new Vuex.Store({
     modules: {
         user,
         router,
-        dictionary
+        rpcUser
     },
     plugins: [vuexLocal.plugin]
 })

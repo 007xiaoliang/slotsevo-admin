@@ -6,74 +6,14 @@
           <div class="car-left">
             <el-row>
               <div>
-                <el-col :xs="4" :md="3" :lg="3">
-                  <span class="card-img">
-                    <img :src="userInfo.headerImg" alt=""/>
-                  </span>
-                </el-col>
-                <el-col :xs="20" :lg="12" :md="12">
                   <div class="text">
-                    <h4>早安，管理员， 请开始您一天的工作吧！</h4>
-                    <p class="tips-text">
-                      <i class="el-icon-sunny el-icon"></i>
-                      <span>今日晴，0℃ - 10℃，天气寒冷，注意添加衣物。</span>
-                    </p>
+                    <h4>Hi,亲爱的 {{userInfo.nickName}}! 欢迎访问slotsevo后台管理系统</h4>
                   </div>
-                </el-col>
               </div>
             </el-row>
           </div>
         </el-col>
-        <el-col :xs="24" :lg='8' :md="8">
-          <div class="car-right">
-            <el-row>
-              <el-col :span="8"
-              >
-                <div class="car-item">
-                  <span class="flow"><i class="el-icon-s-grid"></i></span>
-                  <span>今日流量 </span>
-                  <b>13260</b>
-                </div>
-              </el-col
-              >
-              <el-col :span="8"
-              >
-                <div class="car-item">
-                  <span class="user-number">
-                    <i class="el-icon-s-custom"></i>
-                  </span>
-                  <span>总用户 </span>
-                  <b>48286</b>
-                </div>
-              </el-col
-              >
-              <el-col :span="8"
-              >
-                <div class="car-item">
-                  <span class="feedback">
-                    <i class="el-icon-star-on"></i>
-                  </span>
-                  <span>好评率 </span>
-                  <b>98%</b>
-                </div>
-              </el-col
-              >
-            </el-row>
-          </div>
-        </el-col>
       </div>
-    </el-row>
-    <el-row>
-      <el-card shadow="hover">
-        <h2>
-          使用教学：<a style="color:#409EFF" target="view_window" href="https://www.bilibili.com/video/BV1fV411y7dT/">https://www.bilibili.com/video/BV1fV411y7dT/</a>
-        </h2>
-        <br>
-        <h2>
-          工作流教学：<a style="color:#409EFF" target="view_window" href="https://www.bilibili.com/video/BV1Ka411F7Ji/">https://www.bilibili.com/video/BV1Ka411F7Ji/</a>
-        </h2>
-        <div></div>
-      </el-card>
     </el-row>
     <div class="shadow">
       <el-row :gutter="20">
@@ -91,94 +31,65 @@
         </el-col>
       </el-row>
     </div>
-    <div class="bottom">
-      <el-row :gutter="32">
-        <el-col :xs="24" :sm="24" :lg="12">
-          <div class="chart-player">
-            <musicPlayer/>
-          </div>
-        </el-col>
-        <el-col :xs="24" :sm="24" :lg="12">
-          <div class="chart-player">
-            <todo-list/>
-          </div>
-        </el-col>
-      </el-row>
-    </div>
   </div>
 </template>
 
 <script>
-import musicPlayer from "./component/musicPlayer";
-import TodoList from "./component/todoList";
+
 import {mapGetters} from "vuex";
 
 export default {
-  name: "Dashboard",
+  name: "dashboard",
   data() {
     return {
       toolCards: [
         {
-          label: "用户管理",
-          icon: "el-icon el-icon-monitor",
+          label: "用户信息",
+          icon: "el-icon el-icon-s-custom",
           name: "user",
           color: "#ff9c6e",
         },
         {
-          label: "角色管理",
-          icon: "el-icon el-icon-setting",
-          name: "authority",
+          label: "主题信息",
+          icon: "el-icon el-icon-s-grid",
+          name: "theme",
           color: "#69c0ff",
         },
         {
-          label: "菜单管理",
+          label: "活动信息",
           icon: "el-icon el-icon-menu",
-          name: "menu",
+          name: "activity",
           color: "#b37feb",
         },
         {
-          label: "代码生成器",
-          icon: "el-icon el-icon-cpu",
-          name: "autoCode",
-          color: "#ffd666",
+          label: "产品文案",
+          icon: "el-icon el-icon-folder",
+          name: "product",
+          color: "#6eff9e",
         },
         {
-          label: "表单生成器",
-          icon: "el-icon el-icon-document-checked",
-          name: "formCreate",
-          color: "#ff85c0",
-        },
-        {
-          label: "关于我们",
-          icon: "el-icon el-icon-user",
-          name: "about",
-          color: "#5cdbd3",
-        },
+          label: "数值控制",
+          icon: "el-icon el-icon-edit",
+          name: "data",
+          color: "#d769ff",
+        }
       ],
     };
-  },
-  computed: {
-    ...mapGetters("user", ["userInfo"]),
-  },
-  components: {
-    musicPlayer, //音乐播放器
-    TodoList, //TodoList
-    // RaddarChart, //雷达图
-    // stackMap, //堆叠图
-    // Sunburst, //旭日图
   },
   methods: {
     toTarget(name) {
       this.$router.push({name});
     },
   },
+  computed: {
+    ...mapGetters('user', ['userInfo']),
+  }
 };
 </script>
 
 <style lang="scss" scoped>
 .big {
   margin: 100px 0 0 0;
-  padding-top: 0;
   background-color: rgb(243, 243, 243);
   padding-top: 15px;
 

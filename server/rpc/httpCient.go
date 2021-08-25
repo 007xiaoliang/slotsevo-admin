@@ -32,6 +32,26 @@ func RequestHttp(method string, url string, params map[string]interface{}, obj i
 	return
 }
 
+func RequestHttpWithDetail(method ,url, host, port string, params map[string]interface{}, obj interface{}) (err error) {
+	client.SetHeaders(map[string]string{
+		"Content-Type": "application/json",
+	})
+	url = fmt.Sprintf("%s:%s/%s", host, port, url)
+	switch method {
+	case "GET":
+		p, err := utils.ParseMap(params)
+		if err != nil {
+			return err
+		}
+		_, _ = client.R().SetQueryParams(p).SetResult(obj).Get(url)
+	case "POST":
+		_, _ = client.R().SetBody(params).SetResult(obj).Post(url)
+	default:
+		err = errors.New("unsupported request method")
+	}
+	return
+}
+
 func init() {
 	client = resty.New()
 	// Set client timeout as per your need
