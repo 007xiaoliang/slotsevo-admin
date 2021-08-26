@@ -17,8 +17,8 @@
       </el-row>
       <el-row>
         <BaseInfo v-show="number===0"/>
-        <ActInfo v-show="number===1"/>
-        <ThemeInfo v-show="number===2"/>
+        <ThemeInfo v-show="number===1"/>
+        <ActInfo v-show="number===2"/>
       </el-row>
     </el-main>
   </el-container>
