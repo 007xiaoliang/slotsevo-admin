@@ -12,6 +12,9 @@ export default {
   name: "ThemeInfo",
   computed: {
     ...mapGetters('rpcUser', ['rpcThemeInfo']),
+  },
+  methods: {
+
   }
 }
 </script>

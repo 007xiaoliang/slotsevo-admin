@@ -1,11 +1,15 @@
 export const rpcUser = {
     namespaced: true,
     state: {
+        rpcUserID: "",
         rpcBaseInfo: "",
         rpcThemeInfo: "",
         rpcActivityInfo: ""
     },
     mutations: {
+        setRpcUserID(state, rpcUserID) {
+            state.rpcUserID = rpcUserID
+        },
         setRpcBaseInfo(state, rpcBaseInfo) {
             state.rpcBaseInfo = rpcBaseInfo
         },
@@ -17,6 +21,9 @@ export const rpcUser = {
         }
     },
     getters: {
+        rpcUserID(state) {
+            return state.rpcUserID
+        },
         rpcBaseInfo(state) {
             return state.rpcBaseInfo
         },
