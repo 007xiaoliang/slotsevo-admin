@@ -59,19 +59,20 @@ export default {
         });
         return
       }
-      const rpcUserInfo = getUserInfo({"userID": this.userID})
-      if (rpcUserInfo.code !== 0) {
-        this.$message({
-          type: "error",
-          message: rpcUserInfo.msg,
-          showClose: true,
-        });
-        return
-      }
-      this.setRpcUserID(this.userID)
-      this.setRpcBaseInfo(rpcUserInfo.data.baseinfo)
-      this.setRpcThemeInfo(rpcUserInfo.data.themeinfo)
-      this.setRpcActivityInfo(rpcUserInfo.data.activityinfo)
+      getUserInfo({"userID": this.userID}).then((ele) => {
+        if (ele.code !== 0) {
+          this.$message({
+            type: "error",
+            message: ele.msg,
+            showClose: true,
+          });
+          return
+        }
+        this.setRpcUserID(this.userID)
+        this.setRpcBaseInfo(ele.data.baseinfo)
+        this.setRpcThemeInfo(ele.data.themeinfo)
+        this.setRpcActivityInfo(ele.data.activityinfo)
+      })
     },
     checkNumber(String) {
       const reg = /^[0-9]+.?[0-9]*$/;

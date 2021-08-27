@@ -1,0 +1,2 @@
+docker build -t slotsevo-server --rm=true .
+docker run -ti -d --name slotsevo-server -p 8888:8888 slotsevo-server /bin/bash
