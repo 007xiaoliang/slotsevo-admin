@@ -2,7 +2,7 @@
   <div>
     <div class="themeDiv">
       <div class="themeID" v-for="(themeInfo, themeID) in this.rpcThemeInfo" :key="themeID" :id="themeID"
-           v-show="!specifyID || specifyID === themeID || specifyID === themeID.slice(5) || themeInfo.desc.indexOf(specifyID) > -1">
+           v-show="!specifyID || themeID.indexOf(specifyID) > -1|| themeInfo.desc.indexOf(specifyID) > -1">
         <el-row :gutter="20">
           <el-col :span="4">
             <div class="grid-content bg-purple"><p>{{ themeID }}</p></div>
