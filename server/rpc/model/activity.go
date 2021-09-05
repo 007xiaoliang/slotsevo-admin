@@ -1,5 +1,6 @@
 package model
 
-type ActivityType struct {
-	Name string
+type ActivityTypeResponse struct {
+	ServerTime       string   `json:"server_time"`
+	ActivityTypeList []string `json:"activity_type_list"`
 }

@@ -36,7 +36,7 @@ func RequestHttpWithDetail(method ,url, host, port string, params map[string]int
 	client.SetHeaders(map[string]string{
 		"Content-Type": "application/json",
 	})
-	url = fmt.Sprintf("%s:%s/%s", host, port, url)
+	url = fmt.Sprintf("http://%s:%s/%s", host, port, url)
 	switch method {
 	case "GET":
 		p, err := utils.ParseMap(params)
