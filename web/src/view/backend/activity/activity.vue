@@ -80,7 +80,6 @@ export default {
           });
           return
         }
-        console.info(ele)
         this.themeInfo = ele.data
         console.info(this.themeInfo)
       })

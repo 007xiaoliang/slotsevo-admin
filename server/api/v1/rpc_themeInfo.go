@@ -14,7 +14,7 @@ func GetThemeInfo(c *gin.Context) {
 		return
 	}
 	var rpcThemeInfo [][]string
-	err := rpc.RequestHttpWithDetail("POST", "debug", themeInfo.RpcHost, themeInfo.RpcPort, map[string]interface{}{
+	_, err := rpc.RequestHttpWithDetail("POST", "debug", themeInfo.RpcHost, themeInfo.RpcPort, map[string]interface{}{
 		"cmd": "get_debug_themes",
 	}, &rpcThemeInfo)
 	if err != nil {

@@ -15,6 +15,7 @@ func GetActInfo(c *gin.Context) {
 	defer func() {
 		if err := recover(); err != nil {
 			global.ErrorLog.Info("[Recovery from panic]", zap.Any("err", err))
+			response.FailWithMessage(err.(string), c)
 		}
 	}()
 	var actInfo request.ActInfo
@@ -23,39 +24,33 @@ func GetActInfo(c *gin.Context) {
 		return
 	}
 	var wg sync.WaitGroup
-	var responseChan = make(chan interface{}, 20)
+	var responseChan = make(chan interface{}, 2)
+	var rpcActivityType []string
 	wg.Add(2)
 	go func() {
 		defer wg.Done()
-		var rpcActivityType *[]string
-		err := rpc.RequestHttpWithDetail("POST", "debug", actInfo.RpcHost, actInfo.RpcPort, map[string]interface{}{
+		_, err := rpc.RequestHttpWithDetail("POST", "debug", actInfo.RpcHost, actInfo.RpcPort, map[string]interface{}{
 			"cmd": "get_activity_type",
-		}, rpcActivityType)
+		}, &rpcActivityType)
 		if err != nil {
 			responseChan <- err
-		} else {
-			responseChan <- rpcActivityType
 		}
 	}()
 	go func() {
 		defer wg.Done()
-		var rpcServerTime string
-		err := rpc.RequestHttpWithDetail("POST", "debug", actInfo.RpcHost, actInfo.RpcPort, map[string]interface{}{
+		resp, err := rpc.RequestHttpWithDetail("POST", "debug", actInfo.RpcHost, actInfo.RpcPort, map[string]interface{}{
 			"cmd": "get_server_time",
-		}, &rpcServerTime)
+		}, nil)
 		if err != nil {
 			responseChan <- err
 		} else {
+			rpcServerTime := resp.String()
 			responseChan <- rpcServerTime
 		}
 	}()
-
-	// 等待所以协程执行完毕
-	wg.Wait() // 当计数器为0时, 不再阻塞
-	// 关闭接收结果channel
+	wg.Wait()
 	close(responseChan)
 	var rpcServerTime string
-	var rpcActivityType *[][]string
 	for value := range responseChan {
 		switch t := value.(type) {
 		case error:
@@ -63,8 +58,6 @@ func GetActInfo(c *gin.Context) {
 			return
 		case string:
 			rpcServerTime = value.(string)
-		case *[][]string:
-			rpcActivityType = value.(*[][]string)
 		}
 	}
 	activityTypeResponse := &model.ActivityTypeResponse{
