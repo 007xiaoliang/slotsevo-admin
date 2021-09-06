@@ -13,9 +13,6 @@ import (
 var client *resty.Client
 
 func RequestHttp(method string, url string, params map[string]interface{}, obj interface{}) (err error) {
-	client.SetHeaders(map[string]string{
-		"Content-Type": "application/json",
-	})
 	url = fmt.Sprintf("%s:%s/%s", global.SlotsConfig.Rpc.Host, global.SlotsConfig.Rpc.Port, url)
 	switch method {
 	case "GET":
@@ -32,10 +29,7 @@ func RequestHttp(method string, url string, params map[string]interface{}, obj i
 	return
 }
 
-func RequestHttpWithDetail(method ,url, host, port string, params map[string]interface{}, obj interface{}) (err error) {
-	client.SetHeaders(map[string]string{
-		"Content-Type": "application/json",
-	})
+func RequestHttpWithDetail(method, url, host, port string, params map[string]interface{}, obj interface{}) (err error) {
 	url = fmt.Sprintf("http://%s:%s/%s", host, port, url)
 	switch method {
 	case "GET":
@@ -61,6 +55,10 @@ func init() {
 	client.SetRetryWaitTime(time.Duration(global.SlotsConfig.Rpc.RetryWaitTime) * time.Second)
 	client.SetRetryMaxWaitTime(time.Duration(global.SlotsConfig.Rpc.RetryMaxWaitTime) * time.Second)
 	client.SetContentLength(true)
+	// 并发情况下设置header可能会引起concurrent write map错误。因此初始化时将map的设置都初始化
+	client.SetHeaders(map[string]string{
+		"Content-Type": "application/json",
+	})
 
 	//middleware
 	client.OnBeforeRequest(func(c *resty.Client, req *resty.Request) error {
