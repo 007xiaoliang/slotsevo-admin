@@ -14,7 +14,7 @@ services:
       dockerfile: ./dockerfile_web
     container_name: slotsevo-web
     environment:
-      - TZ=Asia/Shanghai
+      - 'TZ=Asia/Shanghai'
     restart: always
     ports:
       - '7000:8080'
@@ -31,7 +31,7 @@ services:
       dockerfile: ./dockerfile_server
     container_name: slotsevo-server
     environment:
-      - TZ=Asia/Shanghai
+      - 'TZ=Asia/Shanghai'
     restart: always
     ports:
       - '8888:8888'
