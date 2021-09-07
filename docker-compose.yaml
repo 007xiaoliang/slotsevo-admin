@@ -17,7 +17,7 @@ services:
       - TZ=Asia/Shanghai
     restart: always
     ports:
-      - '7000:8080'
+      - '7000:7000'
     depends_on:
       - server
     command: [ 'nginx-debug', '-g', 'daemon off;' ]
