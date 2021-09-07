@@ -81,7 +81,7 @@ export default {
         label: '192.168.2.34'
       }],
       ip: '192.168.2.34',
-      port: '7001',
+      port: '7003',
       themeInfo: [],
       themeIndex: "",
       themeIndexArr: []
