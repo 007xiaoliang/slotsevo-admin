@@ -5,7 +5,7 @@ ENV GOPROXY=https://goproxy.io,direct
 WORKDIR /go/src/slotsevo-admin
 COPY server/ ./
 
-RUN go env && go mod tidy && go build -o server .
+RUN go build -o server .
 
 FROM alpine:latest
 LABEL MAINTAINER="0xl1352807232@gmaill.com"
