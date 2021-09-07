@@ -9,7 +9,6 @@ import (
 	"slotsevo-admin/config"
 	"slotsevo-admin/global"
 	"slotsevo-admin/model"
-	"slotsevo-admin/source"
 	"slotsevo-admin/utils"
 )
 
@@ -104,30 +103,30 @@ func InitDB(gormConfig *gorm.Config) (*gorm.DB, error) {
 		sqlDB.SetMaxOpenConns(conf.MaxOpenConns)
 		global.SlotsDb = db
 	}
-
-	err = global.SlotsDb.AutoMigrate(
-		model.SysUser{},
-		model.SysAuthority{},
-		model.SysApi{},
-		model.SysBaseMenu{},
-		model.SysBaseMenuParameter{},
-		model.JwtBlacklist{},
-	)
-	if err != nil {
-		_ = writeConfig(global.SlotsVp, MysqlConfig)
-		return db, err
-	}
-	err = initDB(
-		source.Admin,
-		source.Api,
-		source.Authority,
-		source.AuthoritiesMenus,
-		source.Casbin,
-		source.DataAuthorities,
-		source.BaseMenu)
-	if err != nil {
-		_ = writeConfig(global.SlotsVp, MysqlConfig)
-		return db, err
-	}
+	// 注释数据库初始化，直接改用sql语句操作数据库初始化数据库
+	//err = global.SlotsDb.AutoMigrate(
+	//	model.SysUser{},
+	//	model.SysAuthority{},
+	//	model.SysApi{},
+	//	model.SysBaseMenu{},
+	//	model.SysBaseMenuParameter{},
+	//	model.JwtBlacklist{},
+	//)
+	//if err != nil {
+	//	_ = writeConfig(global.SlotsVp, MysqlConfig)
+	//	return db, err
+	//}
+	//err = initDB(
+	//	source.Admin,
+	//	source.Api,
+	//	source.Authority,
+	//	source.AuthoritiesMenus,
+	//	source.Casbin,
+	//	source.DataAuthorities,
+	//	source.BaseMenu)
+	//if err != nil {
+	//	_ = writeConfig(global.SlotsVp, MysqlConfig)
+	//	return db, err
+	//}
 	return db, nil
 }

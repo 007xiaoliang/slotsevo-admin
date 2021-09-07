@@ -38,7 +38,6 @@
 import {getActInfo} from "@/api/actInfo";
 
 export default {
-  name: "theme",
   data() {
     return {
       portList: [{

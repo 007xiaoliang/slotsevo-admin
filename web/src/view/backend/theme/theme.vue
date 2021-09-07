@@ -25,9 +25,25 @@
         <div class="el-col-2">
           <el-button type="primary" @click="getRpcThemeInfo">确定</el-button>
         </div>
+        <div class="el-col-2">
+          <el-input v-model="themeIndex" placeholder="查找主题" autofocus=autofocus v-show="this.themeInfo.length > 0"
+                    @keyup.enter.native="setActiveItem"></el-input>
+        </div>
+        <div class="el-col-2">
+          <el-button type="primary" @click="setActiveItem" v-show="this.themeInfo.length > 0">确定</el-button>
+        </div>
       </el-row>
       <el-row>
-        <div id="jsonEditor" style="width: 400px; height: 400px;"></div>
+        <div style="width: 80% ;margin: 40px">
+          <el-carousel :autoplay="false" type="card" height="300px" trigger="click" ref="carousel">
+            <el-carousel-item v-for="(item, count) in themeInfo" :key="count" :name="item[0]">
+              <div @click="getConfig(item[0])">
+                <div>{{ item[0] }}</div>
+                <div>{{ item[1] }}</div>
+              </div>
+            </el-carousel-item>
+          </el-carousel>
+        </div>
       </el-row>
     </el-main>
   </el-container>
@@ -50,7 +66,7 @@ export default {
       }, {
         value: '7005',
         label: '7005'
-      },{
+      }, {
         value: '7777',
         label: '7777'
       }, {
@@ -58,7 +74,8 @@ export default {
         label: '9527'
       }, {
         value: '8000',
-        label: '8000'}],
+        label: '8000'
+      }],
       ipList: [{
         value: '192.168.2.34',
         label: '192.168.2.34'
@@ -66,6 +83,8 @@ export default {
       ip: '192.168.2.34',
       port: '7001',
       themeInfo: [],
+      themeIndex: "",
+      themeIndexArr: []
     }
   },
 
@@ -80,17 +99,48 @@ export default {
           });
           return
         }
-        console.info(ele)
-        this.themeInfo = ele.data
-        console.info(this.themeInfo)
+        this.themeInfo = ele.data.sort().reverse()
+        for (let i = 0; i < this.themeInfo.length; i++) {
+          this.themeIndexArr.push(this.themeInfo[i].join("-"))
+        }
       })
     },
+    setActiveItem() {
+      let index = ""
+      for (let i = 0; i < this.themeIndexArr.length; i++) {
+        if (this.themeIndexArr[i].indexOf(this.themeIndex) > -1) {
+          index = this.themeIndexArr[i].split("-")[0]
+          break
+        }
+      }
+      this.$refs.carousel.setActiveItem(index)
+    },
+    getConfig(themeId) {
+      alert(themeId)
+    }
   },
   components: {},
 }
 </script>
 <style>
+
+.el-carousel__item div {
+  color: #475669;
+  font-size: 40px;
+  text-align: center;
+  margin: 10px;
+  padding: 10px;
+}
+
 .el-row .el-button {
   margin: 0 15px 0 15px;
+}
+
+.el-carousel__item:nth-child(2n) {
+  background-color: #99a9bf;
+}
+
+.el-carousel__item:nth-child(2n+1) {
+  background-color: #d3dce6;
 }
 </style>

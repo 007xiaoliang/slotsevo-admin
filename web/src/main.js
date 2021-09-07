@@ -53,7 +53,9 @@ import {
     Upload,
     Progress,
     MessageBox,
-    Image
+    Image,
+    Carousel,
+    CarouselItem
 } from 'element-ui';
 
 Vue.use(Button);
@@ -104,7 +106,9 @@ Vue.use(Upload);
 Vue.use(Progress);
 Vue.use(Scrollbar);
 Vue.use(Loading.directive);
-Vue.use(Image)
+Vue.use(Image);
+Vue.use(Carousel);
+Vue.use(CarouselItem);
 
 Vue.prototype.$loading = Loading.service;
 Vue.prototype.$message = Message;
