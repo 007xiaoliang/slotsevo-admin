@@ -4,5 +4,5 @@ LABEL MAINTAINER="0xl1352807232@gmail.com"
 WORKDIR /slotsevo_web/
 COPY web/ .
 COPY .docker-compose/nginx/conf.d/my.conf /etc/nginx/conf.d/my.conf
-COPY --from=0 /slotsevo_web/dist /usr/share/nginx/html
+COPY .web/dist /usr/share/nginx/html
 CMD ls -al /usr/share/nginx/html
