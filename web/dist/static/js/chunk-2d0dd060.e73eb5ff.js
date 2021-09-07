@@ -1,0 +1,1 @@
+(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["chunk-2d0dd060"],{"802d":function(n,t,e){"use strict";e.r(t),e.d(t,"getUserInfo",(function(){return r}));var o=e("b775"),r=function(n){return Object(o["default"])({url:"/rpc/userInfo",method:"post",data:n})}}}]);
