@@ -57,7 +57,7 @@ import {
     Carousel,
     CarouselItem
 } from 'element-ui';
-
+import CodeEditor from 'bin-code-editor';
 Vue.use(Button);
 Vue.use(Select);
 Vue.use(Dialog);
@@ -109,6 +109,7 @@ Vue.use(Loading.directive);
 Vue.use(Image);
 Vue.use(Carousel);
 Vue.use(CarouselItem);
+Vue.use(CodeEditor);
 
 Vue.prototype.$loading = Loading.service;
 Vue.prototype.$message = Message;

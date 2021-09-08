@@ -34,8 +34,9 @@
         </div>
       </el-row>
       <el-row>
-        <div style="width: 80% ;margin: 40px">
-          <el-carousel :autoplay="false" type="card" height="300px" trigger="click" ref="carousel">
+        <div style="width: 40% ;margin: 40px 0 40px 0">
+          <el-carousel :autoplay="false" type="card" height="100px" trigger="click" @change='change'
+                       indicator-position="none" ref="carousel">
             <el-carousel-item v-for="(item, count) in themeInfo" :key="count" :name="item[0]">
               <div @click="getConfig(item[0])">
                 <div>{{ item[0] }}</div>
@@ -45,6 +46,9 @@
           </el-carousel>
         </div>
       </el-row>
+      <el-row>
+        <jsonEditor :themeConfig="this.themeConfig"></jsonEditor>
+      </el-row>
     </el-main>
   </el-container>
 </template>
@@ -52,6 +56,8 @@
 
 <script>
 import {getThemeInfo} from "@/api/themeInfo";
+import {getThemeWeight} from "@/api/themeInfo";
+import jsonEditor from '@/view/backend/theme/jsonEditor.vue'
 
 export default {
   name: "theme",
@@ -84,7 +90,8 @@ export default {
       port: '7003',
       themeInfo: [],
       themeIndex: "",
-      themeIndexArr: []
+      themeIndexArr: [],
+      themeConfig: ""
     }
   },
 
@@ -116,19 +123,34 @@ export default {
       this.$refs.carousel.setActiveItem(index)
     },
     getConfig(themeId) {
-      alert(themeId)
-    }
+      getThemeWeight({"rpcPort": this.port, "rpcHost": this.ip, "themeID": themeId}).then((ele) => {
+        if (ele.code !== 0) {
+          this.$message({
+            type: "error",
+            message: ele.msg,
+            showClose: true,
+          });
+          return
+        }
+        this.themeConfig = ele.data
+      })
+    },
+    change() {
+      this.themeConfig = ''
+    },
   },
-  components: {},
+  components: {
+    jsonEditor
+  },
 }
 </script>
 <style>
 
 .el-carousel__item div {
   color: #475669;
-  font-size: 40px;
+  font-size: larger;
   text-align: center;
-  margin: 10px;
+  /*margin: 10px;*/
   padding: 10px;
 }
 

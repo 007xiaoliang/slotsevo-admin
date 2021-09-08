@@ -11,6 +11,7 @@ func InitRpcRouter(Router *gin.RouterGroup) (R gin.IRoutes) {
 		BaseRouter.POST("userInfo", v1.GetUserInfo)
 		BaseRouter.POST("themeInfo", v1.GetThemeInfo)
 		BaseRouter.POST("actInfo", v1.GetActInfo)
+		BaseRouter.POST("themeWeight", v1.GetThemeWeight)
 	}
 	return BaseRouter
 }

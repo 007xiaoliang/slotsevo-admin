@@ -23,3 +23,23 @@ func GetThemeInfo(c *gin.Context) {
 	}
 	response.OkWithDetailed(rpcThemeInfo, "获取成功", c)
 }
+
+func GetThemeWeight(c *gin.Context) {
+	var themeWeight request.ThemeWeight
+	if err := c.ShouldBindJSON(&themeWeight); err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+	var rpcThemeWeight map[string]interface{}
+	_, err := rpc.RequestHttpWithDetail("POST", "debug", themeWeight.RpcHost, themeWeight.RpcPort, map[string]interface{}{
+		"cmd": "get_debug_themes",
+		"params": map[string]string{
+			"themeid": themeWeight.ThemeID,
+		},
+	}, &rpcThemeWeight)
+	if err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+	response.OkWithDetailed(rpcThemeWeight, "获取成功", c)
+}
