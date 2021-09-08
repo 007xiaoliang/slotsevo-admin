@@ -66,3 +66,23 @@ func GetActInfo(c *gin.Context) {
 	}
 	response.OkWithDetailed(activityTypeResponse, "获取成功", c)
 }
+
+func GetActWeight(c *gin.Context) {
+	var actWeight request.ActWeight
+	if err := c.ShouldBindJSON(&actWeight); err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+	var rpcActWeight map[string]interface{}
+	_, err := rpc.RequestHttpWithDetail("POST", "debug", actWeight.RpcHost, actWeight.RpcPort, map[string]interface{}{
+		"cmd": "get_activity_data",
+		"params": map[string]string{
+			"type": actWeight.ActType,
+		},
+	}, &rpcActWeight)
+	if err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+	response.OkWithDetailed(rpcActWeight, "获取成功", c)
+}
