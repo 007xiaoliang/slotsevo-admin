@@ -91,7 +91,7 @@ export default {
       themeInfo: [],
       themeIndex: "",
       themeIndexArr: [],
-      themeConfig: ""
+      themeConfig: {}
     }
   },
 
@@ -136,7 +136,7 @@ export default {
       })
     },
     change() {
-      this.themeConfig = ''
+      this.themeConfig = {}
     },
   },
   components: {

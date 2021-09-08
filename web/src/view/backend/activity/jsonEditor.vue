@@ -10,12 +10,12 @@
 export default {
   data() {
     return {
-      jsonStr : JSON.stringify(this.themeConfig,null,2)
+      jsonStr : JSON.stringify(this.actConfig,null,2)
     }
   },
-  props:["themeConfig"],
+  props:["actConfig"],
   watch: {
-    themeConfig: function (newVal) {
+    actConfig: function (newVal) {
       this.jsonStr = JSON.stringify(newVal,null,2)
     },
   },

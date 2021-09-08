@@ -7,4 +7,11 @@ export const getActInfo = (data) => {
         data: data
     })
 }
+export const getActWeight = (data) => {
+    return service({
+        url: "/rpc/actWeight",
+        method: 'post',
+        data: data
+    })
+}
 

@@ -50,13 +50,13 @@ export default {
           color: "#ff9c6e",
         },
         {
-          label: "主题信息",
+          label: "主题配置",
           icon: "el-icon el-icon-s-grid",
           name: "theme",
           color: "#69c0ff",
         },
         {
-          label: "活动信息",
+          label: "活动配置",
           icon: "el-icon el-icon-menu",
           name: "activity",
           color: "#b37feb",
