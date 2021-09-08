@@ -8,3 +8,10 @@ export const getThemeInfo = (data) => {
     })
 }
 
+export const getThemeWeight = (data) => {
+    return service({
+        url: "/rpc/themeWeight",
+        method: 'post',
+        data: data
+    })
+}

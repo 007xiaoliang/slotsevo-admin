@@ -32,7 +32,7 @@ func GetThemeWeight(c *gin.Context) {
 	}
 	var rpcThemeWeight map[string]interface{}
 	_, err := rpc.RequestHttpWithDetail("POST", "debug", themeWeight.RpcHost, themeWeight.RpcPort, map[string]interface{}{
-		"cmd": "get_debug_themes",
+		"cmd": "get_theme_weights",
 		"params": map[string]string{
 			"themeid": themeWeight.ThemeID,
 		},

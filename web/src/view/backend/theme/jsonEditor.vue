@@ -16,8 +16,7 @@ export default {
   props:["themeConfig"],
   watch: {
     themeConfig: function (newVal) {
-      console.info(newVal)
-      this.jsonStr = newVal
+      this.jsonStr = JSON.stringify(newVal,null,2)
     },
   },
   methods: {
