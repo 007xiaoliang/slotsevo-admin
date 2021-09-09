@@ -18,4 +18,4 @@ COPY --from=0 /go/src/slotsevo-admin/resource ./resource
 
 EXPOSE 8888
 
-ENTRYPOINT ./server
+ENTRYPOINT ./server  --ginMode release

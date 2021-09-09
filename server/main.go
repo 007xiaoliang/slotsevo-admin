@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"slotsevo-admin/core"
 	"slotsevo-admin/global"
 	"slotsevo-admin/initialize"
@@ -14,6 +15,9 @@ import (
 // @name x-token
 // @BasePath /
 func main() {
+	// 解析传入参数
+	flag.StringVar(&global.GinMode, "ginMode", "debug", "gin运行模式")
+	flag.Parse()
 	global.SlotsVp = core.Viper()                                                       // 初始化Viper
 	global.TraceLog, global.AccessLog, global.BaseSendLog, global.ErrorLog = core.Zap() // 初始化zap日志库
 	global.SlotsDb = initialize.Gorm()                                                  // gorm连接并初始化数据库

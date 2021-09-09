@@ -14,6 +14,7 @@ import (
 
 // 初始化总路由
 func Routers() *gin.Engine {
+	gin.SetMode(global.GinMode) // 设置gin mode
 	var Router = gin.New()
 	Router.StaticFS(global.SlotsConfig.Local.Path, http.Dir(global.SlotsConfig.Local.Path)) // 为用户头像和文件提供静态地址
 	// Router.Use(middleware.LoadTls())  // 打开就能玩https了
