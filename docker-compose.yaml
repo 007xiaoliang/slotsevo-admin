@@ -34,8 +34,6 @@ services:
     environment:
       - TZ=Asia/Shanghai
     restart: always
-    ports:
-      - '8888:8888'
     networks:
       network:
         ipv4_address: 177.7.0.12
@@ -47,8 +45,6 @@ services:
     environment:
       - TZ=Asia/Shanghai
     restart: always
-    ports:
-      - '8889:8888'
     networks:
       network:
         ipv4_address: 177.7.0.13
