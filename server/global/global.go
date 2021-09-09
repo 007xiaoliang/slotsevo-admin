@@ -19,4 +19,5 @@ var (
 	BaseSendLog *zap.Logger
 	ErrorLog    *zap.Logger
 	SlotsTimer  = timer.NewTimerTask()
+	GinMode     string
 )

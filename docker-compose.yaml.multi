@@ -1,0 +1,50 @@
+version: "3"
+
+networks:
+  network:
+    ipam:
+      driver: default
+      config:
+        - subnet: '177.7.0.0/16'
+
+services:
+  web:
+    build:
+      context: ./
+      dockerfile: ./dockerfile_web
+    container_name: slotsevo-web
+    environment:
+      - TZ=Asia/Shanghai
+    restart: always
+    ports:
+      - '7000:7000'
+    depends_on:
+      - server1
+      - server2
+    command: [ 'nginx-debug', '-g', 'daemon off;' ]
+    networks:
+      network:
+        ipv4_address: 177.7.0.11
+
+  server1:
+    build:
+      context: ./
+      dockerfile: ./dockerfile_server
+    container_name: slotsevo-server1
+    environment:
+      - TZ=Asia/Shanghai
+    restart: always
+    networks:
+      network:
+        ipv4_address: 177.7.0.12
+  server2:
+    build:
+      context: ./
+      dockerfile: ./dockerfile_server
+    container_name: slotsevo-server2
+    environment:
+      - TZ=Asia/Shanghai
+    restart: always
+    networks:
+      network:
+        ipv4_address: 177.7.0.13
