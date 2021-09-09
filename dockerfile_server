@@ -15,7 +15,8 @@ WORKDIR /go/src/slotsevo-admin
 COPY --from=0 /go/src/slotsevo-admin/server ./
 COPY --from=0 /go/src/slotsevo-admin/config.yaml ./
 COPY --from=0 /go/src/slotsevo-admin/resource ./resource
-
+RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+RUN echo 'Asia/Shanghai' >/etc/timezone
 EXPOSE 8888
 
 ENTRYPOINT ./server  --ginMode release

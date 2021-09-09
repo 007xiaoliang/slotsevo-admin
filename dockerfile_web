@@ -3,4 +3,6 @@ LABEL MAINTAINER="0xl1352807232@gmail.com"
 
 COPY .docker-compose/nginx/conf.d/my.conf /etc/nginx/conf.d/my.conf
 COPY web/dist /usr/share/nginx/html
+RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+RUN echo 'Asia/Shanghai' >/etc/timezone
 CMD ls -al /usr/share/nginx/html
