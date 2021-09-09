@@ -111,7 +111,6 @@ export default {
         }
         this.actInfo = ele.data.activity_type_list
         this.serverTime = ele.data.server_time
-        console.info("serverTime", this.serverTime)
       })
     },
     setActiveItem() {
@@ -134,7 +133,15 @@ export default {
           });
           return
         }
-        this.actConfig = ele.data
+        if (ele.data.err_code !==0){
+          this.$message({
+            type: "error",
+            message: ele.data.err_code,
+            showClose: true,
+          });
+          return
+        }
+        this.actConfig = ele.data.activityData
       })
     },
     change() {

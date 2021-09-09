@@ -1,1 +1,0 @@
-(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["chunk-74b6b7dc"],{"7f4d1":function(n,t,c){"use strict";c.r(t),c.d(t,"getActInfo",(function(){return u}));var o=c("b775"),u=function(n){return Object(o["default"])({url:"/rpc/actInfo",method:"post",data:n})}}}]);
