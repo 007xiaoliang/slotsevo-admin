@@ -30,7 +30,7 @@ services:
     build:
       context: ./
       dockerfile: ./dockerfile_server
-    container_name: slotsevo-server
+    container_name: slotsevo-server1
     environment:
       - TZ=Asia/Shanghai
     restart: always
@@ -43,7 +43,7 @@ services:
     build:
       context: ./
       dockerfile: ./dockerfile_server
-    container_name: slotsevo-server
+    container_name: slotsevo-server2
     environment:
       - TZ=Asia/Shanghai
     restart: always
