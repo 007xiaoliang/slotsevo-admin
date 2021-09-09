@@ -19,7 +19,8 @@ services:
     ports:
       - '7000:7000'
     depends_on:
-      - server
+      - server1
+      - server2
     command: [ 'nginx-debug', '-g', 'daemon off;' ]
     networks:
       network:
