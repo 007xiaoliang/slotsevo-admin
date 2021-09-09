@@ -25,15 +25,15 @@
         <div class="el-col-2">
           <el-button type="primary" @click="getRpcActInfo">确定</el-button>
         </div>
-        <div class="el-col-2">
-          <el-input v-model="themeIndex" placeholder="查找主题" autofocus=autofocus v-show="this.actInfo.length > 0"
+        <div class="el-col-3">
+          <el-input v-model="themeIndex" placeholder="输入活动英文名查询" autofocus=autofocus v-show="this.actInfo.length > 0"
                     @keyup.enter.native="setActiveItem"></el-input>
         </div>
         <div class="el-col-2">
           <el-button type="primary" @click="setActiveItem" v-show="this.actInfo.length > 0">确定</el-button>
         </div>
         <div class="el-col-4">
-          <el-button type="info" v-model="this.serverTime" v-show="this.serverTime.length>0"></el-button>
+          <el-button type="danger" ref="serverTimeBtn" v-show="this.serverTime>0"></el-button>
         </div>
       </el-row>
       <el-row>
@@ -110,7 +110,7 @@ export default {
           return
         }
         this.actInfo = ele.data.activity_type_list
-        this.serverTime = ele.data.server_time
+        this.serverTime = parseInt(ele.data.server_time)
       })
     },
     setActiveItem() {
@@ -133,7 +133,7 @@ export default {
           });
           return
         }
-        if (ele.data.err_code !==0){
+        if (ele.data.err_code !== 0) {
           this.$message({
             type: "error",
             message: ele.data.err_code,
@@ -147,10 +147,33 @@ export default {
     change() {
       this.actConfig = {}
     },
+    timestampToTime(timestamp) {
+      // 时间戳转日期时间--从年到分
+      let time = new Date(timestamp * 1000)
+      let y = time.getFullYear();
+      let m = time.getMonth() + 1;
+      let d = time.getDate();
+      let h = time.getHours();
+      let mm = time.getMinutes();
+      let s = time.getSeconds();
+      return y + '-' + this.add0(m) + '-' + this.add0(d) + ' ' + this.add0(h) + ':' + this.add0(mm) + ':' + this.add0(s);
+    },
+    add0(m) {
+      return m < 10 ? '0' + m : m
+    },
+    serverDate() {
+      if (this.serverTime > 0) {
+        this.serverTime++
+        this.$refs.serverTimeBtn.$el.innerText = this.timestampToTime(this.serverTime)
+      }
+    }
   },
   components: {
     jsonEditor
-  }
+  },
+  mounted() {
+    setInterval(this.serverDate, 1000);
+  },
 }
 </script>
 <style>
