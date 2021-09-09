@@ -19,22 +19,32 @@ services:
     ports:
       - '7000:7000'
     depends_on:
-      - server
+      - server1
+      - server2
     command: [ 'nginx-debug', '-g', 'daemon off;' ]
     networks:
       network:
         ipv4_address: 177.7.0.11
 
-  server:
+  server1:
     build:
       context: ./
       dockerfile: ./dockerfile_server
-    container_name: slotsevo-server
+    container_name: slotsevo-server1
     environment:
       - TZ=Asia/Shanghai
     restart: always
-    ports:
-      - '8888:8888'
     networks:
       network:
         ipv4_address: 177.7.0.12
+  server2:
+    build:
+      context: ./
+      dockerfile: ./dockerfile_server
+    container_name: slotsevo-server2
+    environment:
+      - TZ=Asia/Shanghai
+    restart: always
+    networks:
+      network:
+        ipv4_address: 177.7.0.13
