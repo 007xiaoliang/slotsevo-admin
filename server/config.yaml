@@ -19,11 +19,11 @@ jwt:
 local:
   path: uploads/file
 mysql:
-  path: www.xiaoliang007.asia:3306
+  path: sh-cynosdbmysql-grp-4efy0vf4.sql.tencentcdb.com:27338
   config: charset=utf8mb4&parseTime=True&loc=Local
   db-name: slotsevo_admin
   username: admin
-  password: slotsevoadmin123456
+  password: SlotsevoAdmin123456
   max-idle-conns: 0
   max-open-conns: 0
   log-mode: false
